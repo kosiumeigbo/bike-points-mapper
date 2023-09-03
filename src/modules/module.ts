@@ -1,0 +1,1 @@
+export const ted: number = 5;
