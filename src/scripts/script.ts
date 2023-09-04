@@ -1,12 +1,11 @@
 // window.document.addEventListener("DOMContentLoaded", function () {
 
-import { ted } from "../modules/module";
-console.log(ted)
-
+import {ArrayOfBikePoints} from "../modules/module";
+/*
 fetch("https://api.tfl.gov.uk/BikePoint/")
   .then((res) => res.json())
   .then((data) => {
-    console.log(`length of array is ${data.length}`);
+    console.log(data[1]);
     return fetch(
       `https://api.tfl.gov.uk/Occupancy/BikePoints/${data[1].id}`
     ).then((res) => res.json());
@@ -17,5 +16,9 @@ fetch("https://api.tfl.gov.uk/BikePoint/")
     document.body.textContent = `${pointData.id}`;
   })
   .catch((err) => console.error(err));
-
+*/
 // });
+
+ArrayOfBikePoints("https://api.tfl.gov.uk/BikePoint/").then((data) =>
+  console.log(data)
+);
