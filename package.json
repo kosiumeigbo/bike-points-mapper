@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +18,7 @@
     "live-server": "^1.2.2"
   },
   "devDependencies": {
+    "parcel": "^2.9.3",
     "sass": "^1.66.1",
     "typescript": "^5.2.2"
   }
