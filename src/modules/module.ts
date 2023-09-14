@@ -1,4 +1,7 @@
 import {BikePoint} from "./types";
+import {Chart} from "chart.js/auto";
+
+const bikePointsUrl: string = "https://api.tfl.gov.uk/BikePoint/";
 /* 
 export const getDataForAllBikePoints = async function (url: string) {
   try {
@@ -24,7 +27,8 @@ export const getDataForAllBikePoints = async function (url: string) {
   } catch (e) {
     console.log(e);
   }
-}; */
+};
+*/
 
 export const getDataForAllBikePoints = async function (url: string) {
   try {
@@ -33,7 +37,7 @@ export const getDataForAllBikePoints = async function (url: string) {
 
     const bikePointsByArea = new Map<string, BikePoint[]>();
 
-    console.log("bikePointsByArea", bikePointsByArea);
+    // console.log("bikePointsByArea", bikePointsByArea);
 
     for (const bikePoint of allBikePoints) {
       const area = bikePoint.commonName.split(",").at(-1)?.trim();
@@ -45,9 +49,9 @@ export const getDataForAllBikePoints = async function (url: string) {
       }
     }
 
-    console.log("bikePointsByArea", bikePointsByArea);
-    console.log("bikePoints area entries", bikePointsByArea.entries());
-    console.log(Array.from(bikePointsByArea.entries()));
+    // console.log("bikePointsByArea", bikePointsByArea);
+    // console.log("bikePoints area entries", bikePointsByArea.entries());
+    // console.log(Array.from(bikePointsByArea.entries()));
 
     const result = Array.from(bikePointsByArea.entries()).map(
       ([name, bikePoints]) => {
@@ -57,6 +61,26 @@ export const getDataForAllBikePoints = async function (url: string) {
 
     return result;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 };
+
+// const getBarChartObject = function (
+//   sortedBikePointsArray: {name: string; bikePoints: BikePoint[]}[]
+// ) {};
+
+// const getPieChartObject = function (
+//   sortedBikePointsArray: {name: string; bikePoints: BikePoint[]}[]
+// ) {};
+
+// const drawBarAndPieChart = async function () {
+//   try {
+//     const sortedBikePointsArray = await getDataForAllBikePoints(bikePointsUrl);
+
+//     if (sortedBikePointsArray instanceof Error)
+//       throw new Error("Could Not Get Bike Points Data from server");
+
+//     const barChartArea = document.querySelector("#bar-chart");
+//     // const pieChartArea = document.querySelector("#pie-chart");
+//   } catch (e) {}
+// };
