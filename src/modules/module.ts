@@ -49,10 +49,6 @@ export const getDataForAllBikePoints = async function (url: string) {
       }
     }
 
-    // console.log("bikePointsByArea", bikePointsByArea);
-    // console.log("bikePoints area entries", bikePointsByArea.entries());
-    // console.log(Array.from(bikePointsByArea.entries()));
-
     const result = Array.from(bikePointsByArea.entries()).map(
       ([name, bikePoints]) => {
         return {name, bikePoints};
