@@ -61,22 +61,11 @@ export const getDataForAllBikePoints = async function (url: string) {
   }
 };
 
-// const getBarChartObject = function (
-//   sortedBikePointsArray: {name: string; bikePoints: BikePoint[]}[]
-// ) {};
-
-// const getPieChartObject = function (
-//   sortedBikePointsArray: {name: string; bikePoints: BikePoint[]}[]
-// ) {};
-
-// const drawBarAndPieChart = async function () {
-//   try {
-//     const sortedBikePointsArray = await getDataForAllBikePoints(bikePointsUrl);
-
-//     if (sortedBikePointsArray instanceof Error)
-//       throw new Error("Could Not Get Bike Points Data from server");
-
-//     const barChartArea = document.querySelector("#bar-chart");
-//     // const pieChartArea = document.querySelector("#pie-chart");
-//   } catch (e) {}
-// };
+export const getSelectOption = function (bikePoint: {
+  name: string;
+  bikePoints: BikePoint[];
+}) {
+  return `
+  <option value="${bikePoint.name}">${bikePoint.name}</option>
+  `;
+};
