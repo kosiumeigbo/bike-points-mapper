@@ -9,8 +9,20 @@
   </head>
   <body>
     <div class="body-container">
-      <canvas class="chart-area" id="bar-chart"></canvas>
-      <canvas class="chart-area" id="pie-chart"></canvas>
+      <h1>
+        BIKEPOINTS IN LONDON<br />
+        <span>according to TfL</span>
+      </h1>
+      <label for="areas">Choose an area:</label>
+      <select name="areas" id="areas">
+        <option selected disabled>Choose an Area</option>
+      </select>
+      <div id="bar-chart-container">
+        <canvas class="chart-area" id="bar-chart"></canvas>
+      </div>
+      <div id="pie-chart-container">
+        <canvas class="chart-area" id="pie-chart"></canvas>
+      </div>
     </div>
   </body>
 </html>
