@@ -57,6 +57,7 @@ export const getDataForAllBikePoints = async function (url: string) {
 
     return result;
   } catch (e) {
+    (e as Error).message = noServerData;
     return e;
   }
 };
