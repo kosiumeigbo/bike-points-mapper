@@ -62,6 +62,24 @@ export const getDataForAllBikePoints = async function (url: string) {
   }
 };
 
+export const fullPageErrorHTML = function (msg: string) {
+  return `
+  <div class="page-error">
+    <h1>PAGE ERROR</h1>
+    <p>${msg}</p>
+  </div>
+  `;
+};
+
+export const fullPageTitle = function () {
+  return `
+  <h1 class="heading">
+    BIKEPOINTS IN LONDON<br />
+    <span>according to TfL</span>
+  </h1>
+  `;
+};
+
 export const getSelectOption = function (bikePoint: {
   name: string;
   bikePoints: BikePoint[];
