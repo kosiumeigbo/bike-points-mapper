@@ -45,7 +45,12 @@ body {
   padding: 1rem 0;
 }
 
-.body-container {
+main {
+  width: 100%;
+  margin-inline: auto;
+}
+
+main {
   width: max(90%, $screen-xl);
   margin-inline: auto;
 }
@@ -54,3 +59,8 @@ body {
   width: 100%;
   height: auto;
 }
+
+/* 
+.page-error {
+}
+ */
