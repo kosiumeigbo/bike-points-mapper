@@ -2,6 +2,7 @@ import {BikePoint} from "./types";
 import {Chart} from "chart.js/auto";
 
 const noServerData: string = "Could not get data from server";
+
 /* 
 export const getDataForAllBikePoints = async function (url: string) {
   try {
@@ -36,8 +37,6 @@ export const getDataForAllBikePoints = async function (url: string) {
     const allBikePoints = (await response.json()) as BikePoint[];
 
     const bikePointsByArea = new Map<string, BikePoint[]>();
-
-    // console.log("bikePointsByArea", bikePointsByArea);
 
     for (const bikePoint of allBikePoints) {
       const area = bikePoint.commonName.split(",").at(-1)?.trim();
@@ -87,4 +86,152 @@ export const getSelectOptionDropDownList = function (bikePoint: {
   return `
   <option value="${bikePoint.name}">${bikePoint.name}</option>
   `;
+};
+
+export const getDataForCharts = function (
+  selArea: string,
+  sortedArr: {
+    name: string;
+    bikePoints: BikePoint[];
+  }[]
+) {
+  const selectAreaObj = sortedArr.find(
+    (areaObj) => selArea === areaObj.name
+  ) as {
+    name: string;
+    bikePoints: BikePoint[];
+  };
+
+  const labelNamesArray = selectAreaObj?.bikePoints.map((bkPoint) =>
+    bkPoint.commonName.split(",")[0]?.trim()
+  ) as string[];
+
+  const selectAreaNbBikes = selectAreaObj?.bikePoints.map(
+    (bkPoint: BikePoint) => {
+      const bkPointAdditionalProps = bkPoint.additionalProperties;
+      return Number(
+        bkPointAdditionalProps.find((obj) => obj.key === "NbBikes")?.value
+      );
+    }
+  ) as number[];
+
+  const selectAreaNbEmptyDocks = selectAreaObj?.bikePoints.map(
+    (bkPoint: BikePoint) => {
+      const bkPointAdditionalProps = bkPoint.additionalProperties;
+      return Number(
+        bkPointAdditionalProps.find((obj) => obj.key === "NbEmptyDocks")?.value
+      );
+    }
+  ) as number[];
+
+  const selectAreaNbDocks = selectAreaObj?.bikePoints.map(
+    (bkPoint: BikePoint) => {
+      const bkPointAdditionalProps = bkPoint.additionalProperties;
+      return Number(
+        bkPointAdditionalProps.find((obj) => obj.key === "NbDocks")?.value
+      );
+    }
+  ) as number[];
+
+  return [
+    selectAreaObj,
+    labelNamesArray,
+    selectAreaNbBikes,
+    selectAreaNbEmptyDocks,
+    selectAreaNbDocks,
+  ];
+};
+
+/* ----------------- Build Page Function ---------------- */
+
+export const buildPage = async function (url: string) {
+  try {
+    const sortedBikePointsArray = (await getDataForAllBikePoints(url)) as
+      | {
+          name: string;
+          bikePoints: BikePoint[];
+        }[]
+      | Error;
+    if (sortedBikePointsArray instanceof Error) {
+      throw sortedBikePointsArray;
+    }
+    // console.log(sortedBikePointsArray);
+
+    // Main page content container
+    const main = document.createElement("main");
+
+    // Page Title Heading
+    main.insertAdjacentHTML("beforeend", fullPageTitle());
+
+    // Label for dropdown list
+    const label = document.createElement("label");
+    label.setAttribute("for", "areas");
+    label.textContent = "Choose an area:";
+    main.insertAdjacentElement("beforeend", label);
+
+    // Drop down list
+    const dropDownList = document.createElement("select");
+    const disabledOption = document.createElement("option");
+
+    disabledOption.textContent = "Choose an option" as string; // Creating disabled option
+    disabledOption.setAttribute("selected", "");
+    disabledOption.setAttribute("disabled", "");
+    dropDownList.insertAdjacentElement("afterbegin", disabledOption);
+
+    sortedBikePointsArray.forEach((obj) => {
+      dropDownList.insertAdjacentHTML(
+        "beforeend",
+        getSelectOptionDropDownList(obj)
+      );
+    });
+    main.insertAdjacentElement("beforeend", dropDownList);
+
+    // Bar Chart Container and Canvas
+    const barChartContainer = document.createElement("div");
+    barChartContainer.id = "bar-chart-container" as string;
+
+    const barChartCanvas = document.createElement("canvas");
+    barChartCanvas.id = "bar-chart" as string;
+    barChartCanvas.classList.add("chart-area");
+
+    barChartContainer.insertAdjacentElement("beforeend", barChartCanvas);
+    main.insertAdjacentElement("beforeend", barChartContainer);
+
+    // Pie Chart Container and Canvas
+    const pieChartContainer = document.createElement("div");
+    pieChartContainer.id = "pie-chart-container" as string;
+
+    const pieChartCanvas = document.createElement("canvas");
+    pieChartCanvas.id = "pie-chart" as string;
+    pieChartCanvas.classList.add("chart-area");
+
+    pieChartContainer.insertAdjacentElement("beforeend", pieChartCanvas);
+    main.insertAdjacentElement("beforeend", pieChartContainer);
+
+    // Event Listener for when an option is selected
+    dropDownList.addEventListener("change", function () {
+      const [
+        selAreaObj,
+        labelNamesArr,
+        selAreaNbBikes,
+        selAreaNbEmptyDocks,
+        selAreaNbDocks,
+      ] = getDataForCharts(dropDownList.value, sortedBikePointsArray);
+
+      console.clear();
+      console.log(selAreaObj);
+      console.log(labelNamesArr);
+      console.log(selAreaNbBikes);
+      console.log(selAreaNbEmptyDocks);
+      console.log(selAreaNbDocks);
+    });
+
+    return main;
+  } catch (e) {
+    const main = document.createElement("main");
+    main.insertAdjacentHTML(
+      "afterbegin",
+      fullPageErrorHTML((e as Error).message)
+    );
+  }
 };
