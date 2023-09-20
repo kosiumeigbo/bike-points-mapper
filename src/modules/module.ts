@@ -80,7 +80,7 @@ export const fullPageTitle = function () {
   `;
 };
 
-export const getSelectOption = function (bikePoint: {
+export const getSelectOptionDropDownList = function (bikePoint: {
   name: string;
   bikePoints: BikePoint[];
 }) {
