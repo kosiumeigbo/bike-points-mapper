@@ -1,7 +1,7 @@
 import {BikePoint} from "./types";
 import {Chart} from "chart.js/auto";
 
-const bikePointsUrl: string = "https://api.tfl.gov.uk/BikePoint/";
+const noServerData: string = "Could not get data from server";
 /* 
 export const getDataForAllBikePoints = async function (url: string) {
   try {
