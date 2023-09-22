@@ -171,13 +171,6 @@ export const buildPage = async function (url: string) {
 
     // Drop down list
     const dropDownList = document.createElement("select");
-    const disabledOption = document.createElement("option");
-
-    disabledOption.textContent = "Choose an option" as string; // Creating disabled option
-    disabledOption.setAttribute("selected", "");
-    disabledOption.setAttribute("disabled", "");
-    dropDownList.insertAdjacentElement("afterbegin", disabledOption);
-
     sortedBikePointsArray.forEach((obj) => {
       dropDownList.insertAdjacentHTML(
         "beforeend",
