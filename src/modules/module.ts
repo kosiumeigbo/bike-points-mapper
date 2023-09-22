@@ -268,8 +268,8 @@ export const buildPage = async function (url: string) {
       console.log(selAreaNbEmptyDocks);
       console.log(selAreaNbDocks);
 
-      pieChartCanvas.innerHTML = "";
-      barChartCanvas.innerHTML = "";
+      myBarChart.destroy();
+      myPieChart.destroy();
 
       new Chart(barChartCanvas, {
         type: "bar",
