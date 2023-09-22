@@ -271,7 +271,7 @@ export const buildPage = async function (url: string) {
       myBarChart.destroy();
       myPieChart.destroy();
 
-      new Chart(barChartCanvas, {
+      myBarChart = new Chart(barChartCanvas, {
         type: "bar",
         data: {
           labels: selLabelNamesArr as string[],
@@ -291,8 +291,9 @@ export const buildPage = async function (url: string) {
           ],
         },
       });
-      new Chart(pieChartCanvas, {
-        type: "doughnut",
+
+      myPieChart = new Chart(pieChartCanvas, {
+        type: "pie",
         data: {
           labels: selLabelNamesArr as string[],
           datasets: [
