@@ -201,6 +201,56 @@ export const buildPage = async function (url: string) {
     pieChartContainer.insertAdjacentElement("beforeend", pieChartCanvas);
     main.insertAdjacentElement("beforeend", pieChartContainer);
 
+    const [
+      defaultAreaObj,
+      defaultAreaLabelNamesArr,
+      defaultAreaNbBikes,
+      defaultAreaNbEmptyDocks,
+      defaultAreaNbDocks,
+    ] = getDataForCharts(dropDownList.value, sortedBikePointsArray);
+
+    let myBarChart = new Chart(barChartCanvas, {
+      type: "bar",
+      data: {
+        labels: defaultAreaLabelNamesArr as string[],
+        datasets: [
+          {
+            label: "Number of NbBikes",
+            data: defaultAreaNbBikes,
+          },
+          {
+            label: "Number of NbEmptyDocks",
+            data: defaultAreaNbEmptyDocks,
+          },
+          {
+            label: "Number of NbDocks",
+            data: defaultAreaNbDocks,
+          },
+        ],
+      },
+    });
+
+    let myPieChart = new Chart(pieChartCanvas, {
+      type: "pie",
+      data: {
+        labels: defaultAreaLabelNamesArr as string[],
+        datasets: [
+          {
+            label: "Number of NbBikes",
+            data: defaultAreaNbBikes,
+          },
+          {
+            label: "Number of NbEmptyDocks",
+            data: defaultAreaNbEmptyDocks,
+          },
+          {
+            label: "Number of NbDocks",
+            data: defaultAreaNbDocks,
+          },
+        ],
+      },
+    });
+
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
       const [
