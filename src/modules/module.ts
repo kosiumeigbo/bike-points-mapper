@@ -220,7 +220,7 @@ export const buildPage = async function (url: string) {
 
       console.clear();
       console.log(selAreaObj);
-      console.log(labelNamesArr);
+      console.log(selLabelNamesArr);
       console.log(selAreaNbBikes);
       console.log(selAreaNbEmptyDocks);
       console.log(selAreaNbDocks);
@@ -231,7 +231,7 @@ export const buildPage = async function (url: string) {
       new Chart(barChartCanvas, {
         type: "bar",
         data: {
-          labels: labelNamesArr as string[],
+          labels: selLabelNamesArr as string[],
           datasets: [
             {
               label: "Number of NbBikes",
@@ -251,7 +251,7 @@ export const buildPage = async function (url: string) {
       new Chart(pieChartCanvas, {
         type: "doughnut",
         data: {
-          labels: labelNamesArr as string[],
+          labels: selLabelNamesArr as string[],
           datasets: [
             {
               label: "Number of NbBikes",
