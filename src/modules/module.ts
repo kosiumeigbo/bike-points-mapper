@@ -212,7 +212,7 @@ export const buildPage = async function (url: string) {
     dropDownList.addEventListener("change", function () {
       const [
         selAreaObj,
-        labelNamesArr,
+        selLabelNamesArr,
         selAreaNbBikes,
         selAreaNbEmptyDocks,
         selAreaNbDocks,
