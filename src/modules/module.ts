@@ -224,6 +224,50 @@ export const buildPage = async function (url: string) {
       console.log(selAreaNbBikes);
       console.log(selAreaNbEmptyDocks);
       console.log(selAreaNbDocks);
+
+      pieChartCanvas.innerHTML = "";
+      barChartCanvas.innerHTML = "";
+
+      new Chart(barChartCanvas, {
+        type: "bar",
+        data: {
+          labels: labelNamesArr as string[],
+          datasets: [
+            {
+              label: "Number of NbBikes",
+              data: selAreaNbBikes,
+            },
+            {
+              label: "Number of NbEmptyDocks",
+              data: selAreaNbEmptyDocks,
+            },
+            {
+              label: "Number of NbDocks",
+              data: selAreaNbDocks,
+            },
+          ],
+        },
+      });
+      new Chart(pieChartCanvas, {
+        type: "doughnut",
+        data: {
+          labels: labelNamesArr as string[],
+          datasets: [
+            {
+              label: "Number of NbBikes",
+              data: selAreaNbBikes,
+            },
+            {
+              label: "Number of NbEmptyDocks",
+              data: selAreaNbEmptyDocks,
+            },
+            {
+              label: "Number of NbDocks",
+              data: selAreaNbDocks,
+            },
+          ],
+        },
+      });
     });
 
     return main;
