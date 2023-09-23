@@ -156,6 +156,7 @@ export const buildPage = async function (url: string) {
       throw sortedBikePointsArray;
     }
     console.log(sortedBikePointsArray);
+    console.log(sortedBikePointsArray);
 
     // Main page content container
     const main = document.createElement("main");
