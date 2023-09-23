@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel index.html --open --dist-dir server",
-    "build": "parcel build index.html --public-url https://kosiumeigbo.github.io/tfl-api/ --dist-dir dist",
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html --public-url https://kosiumeigbo.github.io/tfl-api/",
     "deploy": "gh-pages -d dist"
   },
   "author": "",
