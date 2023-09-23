@@ -228,8 +228,10 @@ export const buildPage = async function (url: string) {
       console.log(selAreaNbEmptyDocks);
       console.log(selAreaNbDocks);
 
-      myBarChart.destroy();
-      myPieChart.destroy();
+      if (myBarChart instanceof Chart && myPieChart instanceof Chart) {
+        myBarChart.destroy();
+        myPieChart.destroy();
+      }
 
       myBarChart = new Chart(barChartCanvas, {
         type: "bar",
