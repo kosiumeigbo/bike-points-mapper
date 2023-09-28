@@ -197,19 +197,66 @@ export const buildPage = async function (url: string) {
     barChartContainer.insertAdjacentElement("beforeend", barChartCanvas);
     main.insertAdjacentElement("beforeend", barChartContainer);
 
-    // Pie Chart Container and Canvas
-    const pieChartContainer = document.createElement("div");
-    pieChartContainer.id = "pie-chart-container" as string;
+    // Pie Chart Containers and Canvas
+    const [
+      pieChartContainerNbBikes,
+      pieChartContainerNbEmptyDocks,
+      pieChartContainerNbDocks,
+    ] = [
+      document.createElement("div"),
+      document.createElement("div"),
+      document.createElement("div"),
+    ];
 
-    const pieChartCanvas = document.createElement("canvas");
-    pieChartCanvas.id = "pie-chart" as string;
-    pieChartCanvas.classList.add("chart-area");
+    pieChartContainerNbBikes.id = "pie-chart-container-nbbikes" as string;
+    pieChartContainerNbEmptyDocks.id =
+      "pie-chart-container-nbemptydocks" as string;
+    pieChartContainerNbDocks.id = "pie-chart-container-nbdocks" as string;
 
-    pieChartContainer.insertAdjacentElement("beforeend", pieChartCanvas);
-    main.insertAdjacentElement("beforeend", pieChartContainer);
+    const [
+      pieChartCanvasNbBikes,
+      pieChartCanvasNbEmptyDocks,
+      pieChartCanvasNbDocks,
+    ] = [
+      document.createElement("canvas"),
+      document.createElement("canvas"),
+      document.createElement("canvas"),
+    ];
+
+    // Pie Chart Canvas NbBikes
+    pieChartCanvasNbBikes.id = "pie-chart-nbbikes" as string;
+    pieChartCanvasNbBikes.classList.add("chart-area");
+
+    pieChartContainerNbBikes.insertAdjacentElement(
+      "beforeend",
+      pieChartCanvasNbBikes
+    );
+    main.insertAdjacentElement("beforeend", pieChartContainerNbBikes);
+
+    // Pie Chart Canvas NbEmptyDocks
+    pieChartCanvasNbEmptyDocks.id = "pie-chart-nbemptydocks" as string;
+    pieChartCanvasNbEmptyDocks.classList.add("chart-area");
+
+    pieChartContainerNbEmptyDocks.insertAdjacentElement(
+      "beforeend",
+      pieChartCanvasNbEmptyDocks
+    );
+    main.insertAdjacentElement("beforeend", pieChartContainerNbEmptyDocks);
+
+    // Pie Chart Canvas NbDocks
+    pieChartCanvasNbDocks.id = "pie-chart-nbdocks" as string;
+    pieChartCanvasNbDocks.classList.add("chart-area");
+
+    pieChartContainerNbDocks.insertAdjacentElement(
+      "beforeend",
+      pieChartCanvasNbDocks
+    );
+    main.insertAdjacentElement("beforeend", pieChartContainerNbDocks);
 
     let myBarChart: Chart | any;
-    let myPieChart: Chart | any;
+    let myPieChartNbBikes: Chart | any;
+    let myPieChartNbEmptyDocks: Chart | any;
+    let myPieChartNbDocks: Chart | any;
 
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
@@ -228,9 +275,16 @@ export const buildPage = async function (url: string) {
       console.log(selAreaNbEmptyDocks);
       console.log(selAreaNbDocks);
 
-      if (myBarChart instanceof Chart && myPieChart instanceof Chart) {
+      if (
+        myBarChart instanceof Chart &&
+        myPieChartNbBikes instanceof Chart &&
+        myPieChartNbDocks instanceof Chart &&
+        myPieChartNbEmptyDocks instanceof Chart
+      ) {
         myBarChart.destroy();
-        myPieChart.destroy();
+        myPieChartNbBikes.destroy();
+        myPieChartNbDocks.destroy();
+        myPieChartNbEmptyDocks.destroy();
       }
 
       myBarChart = new Chart(barChartCanvas, {
@@ -254,7 +308,7 @@ export const buildPage = async function (url: string) {
         },
       });
 
-      myPieChart = new Chart(pieChartCanvas, {
+      myPieChartNbBikes = new Chart(pieChartCanvasNbBikes, {
         type: "pie",
         data: {
           labels: selLabelNamesArr as string[],
@@ -263,13 +317,30 @@ export const buildPage = async function (url: string) {
               label: "Number of NbBikes",
               data: selAreaNbBikes,
             },
-            {
-              label: "Number of NbEmptyDocks",
-              data: selAreaNbEmptyDocks,
-            },
+          ],
+        },
+      });
+
+      myPieChartNbDocks = new Chart(pieChartCanvasNbDocks, {
+        type: "pie",
+        data: {
+          labels: selLabelNamesArr as string[],
+          datasets: [
             {
               label: "Number of NbDocks",
               data: selAreaNbDocks,
+            },
+          ],
+        },
+      });
+      myPieChartNbEmptyDocks = new Chart(pieChartCanvasNbEmptyDocks, {
+        type: "pie",
+        data: {
+          labels: selLabelNamesArr as string[],
+          datasets: [
+            {
+              label: "Number of NbDocks",
+              data: selAreaNbEmptyDocks,
             },
           ],
         },
