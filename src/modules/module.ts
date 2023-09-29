@@ -1,5 +1,6 @@
 import {BikePoint} from "./types";
 import {Chart} from "chart.js/auto";
+import L from "leaflet";
 
 const noServerData: string = "Could not get data from server";
 
