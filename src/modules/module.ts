@@ -207,6 +207,10 @@ export const buildPage = async function (url: string) {
     barChartContainer.insertAdjacentElement("beforeend", barChartCanvas);
     main.insertAdjacentElement("beforeend", barChartContainer);
 
+    // Container for all pie charts
+    const allPieChartsContainer = document.createElement("div");
+    allPieChartsContainer.classList.add("pie-charts-container");
+
     // Pie Chart Containers and Canvas
     const [
       pieChartContainerNbBikes,
