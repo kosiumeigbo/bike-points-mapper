@@ -379,5 +379,6 @@ export const buildPage = async function (url: string) {
       "afterbegin",
       fullPageErrorHTML((e as Error).message)
     );
+    return main;
   }
 };
