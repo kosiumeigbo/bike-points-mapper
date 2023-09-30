@@ -60,12 +60,11 @@ export const getDataForAllBikePoints = async function (url: string) {
 
     return result;
   } catch (e) {
-    (e as Error).message = noServerData;
-    return e;
+    return e as Error;
   }
 };
 
-export const fullPageErrorHTML = function (msg: string) {
+export const fullPageErrorHTML = function (msg: string): string {
   return `
   <div class="page-error">
     <h1>PAGE ERROR</h1>
@@ -74,7 +73,7 @@ export const fullPageErrorHTML = function (msg: string) {
   `;
 };
 
-export const fullPageTitle = function () {
+export const fullPageTitle = function (): string {
   return `
   <h1 class="heading">
     BIKEPOINTS IN LONDON<br />
@@ -86,7 +85,7 @@ export const fullPageTitle = function () {
 export const getSelectOptionDropDownList = function (bikePoint: {
   name: string;
   bikePoints: BikePoint[];
-}) {
+}): string {
   return `
   <option value="${bikePoint.name}">${bikePoint.name}</option>
   `;
@@ -98,7 +97,14 @@ export const getDataForCharts = function (
     name: string;
     bikePoints: BikePoint[];
   }[]
-) {
+): (
+  | string[]
+  | {
+      name: string;
+      bikePoints: BikePoint[];
+    }
+  | number[]
+)[] {
   const selectAreaObj = sortedArr.find(
     (areaObj) => selArea === areaObj.name
   ) as {
