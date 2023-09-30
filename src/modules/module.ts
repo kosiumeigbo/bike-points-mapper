@@ -346,18 +346,6 @@ export const buildPage = async function (url: string) {
         },
       });
 
-      myPieChartNbDocks = new Chart(pieChartCanvasNbDocks, {
-        type: "pie",
-        data: {
-          labels: selLabelNamesArr as string[],
-          datasets: [
-            {
-              label: "Number of NbDocks",
-              data: selAreaNbDocks,
-            },
-          ],
-        },
-      });
       myPieChartNbEmptyDocks = new Chart(pieChartCanvasNbEmptyDocks, {
         type: "pie",
         data: {
@@ -366,6 +354,19 @@ export const buildPage = async function (url: string) {
             {
               label: "Number of NbDocks",
               data: selAreaNbEmptyDocks,
+            },
+          ],
+        },
+      });
+
+      myPieChartNbDocks = new Chart(pieChartCanvasNbDocks, {
+        type: "pie",
+        data: {
+          labels: selLabelNamesArr as string[],
+          datasets: [
+            {
+              label: "Number of NbDocks",
+              data: selAreaNbDocks,
             },
           ],
         },
