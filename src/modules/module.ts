@@ -181,6 +181,7 @@ export const buildPage = async function (url: string) {
 
     // Drop down list
     const dropDownList = document.createElement("select");
+    dropDownList.id = "areas";
 
     const disabledOption = document.createElement("option");
     disabledOption.textContent = "Choose an option" as string; // Creating disabled option
