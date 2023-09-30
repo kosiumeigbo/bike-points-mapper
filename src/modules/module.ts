@@ -498,6 +498,101 @@ export const buildPage = async function (url: string) {
       });
     });
 
+    // window.addEventListener("resize", function () {
+    //   if (dropDownList.value != "Choose an option") {
+    //     const [
+    //       selAreaObj,
+    //       selLabelNamesArr,
+    //       selAreaNbBikes,
+    //       selAreaNbEmptyDocks,
+    //       selAreaNbDocks,
+    //     ] = getDataForCharts(dropDownList.value, sortedBikePointsArray);
+
+    //     console.clear();
+    //     console.log(selAreaObj);
+    //     console.log(selLabelNamesArr);
+    //     console.log(selAreaNbBikes);
+    //     console.log(selAreaNbEmptyDocks);
+    //     console.log(selAreaNbDocks);
+
+    //     if (
+    //       myBarChart instanceof Chart &&
+    //       myPieChartNbBikes instanceof Chart &&
+    //       myPieChartNbDocks instanceof Chart &&
+    //       myPieChartNbEmptyDocks instanceof Chart
+    //     ) {
+    //       myBarChart.destroy();
+    //       myPieChartNbBikes.destroy();
+    //       myPieChartNbDocks.destroy();
+    //       myPieChartNbEmptyDocks.destroy();
+    //     }
+
+    //     myBarChart = new Chart(barChartCanvas, {
+    //       type: "bar",
+    //       data: {
+    //         labels: selLabelNamesArr as string[],
+    //         datasets: [
+    //           {
+    //             label: "Number of NbBikes",
+    //             data: selAreaNbBikes,
+    //           },
+    //           {
+    //             label: "Number of NbEmptyDocks",
+    //             data: selAreaNbEmptyDocks,
+    //           },
+    //           {
+    //             label: "Number of NbDocks",
+    //             data: selAreaNbDocks,
+    //           },
+    //         ],
+    //       },
+    //       options: barChartOptions,
+    //     });
+
+    //     myPieChartNbBikes = new Chart(pieChartCanvasNbBikes, {
+    //       type: "pie",
+    //       data: {
+    //         labels: selLabelNamesArr as string[],
+    //         datasets: [
+    //           {
+    //             label: "Number of NbBikes",
+    //             data: selAreaNbBikes,
+    //           },
+    //         ],
+    //       },
+    //       options: pieChartOptions,
+    //     });
+
+    //     myPieChartNbEmptyDocks = new Chart(pieChartCanvasNbEmptyDocks, {
+    //       type: "pie",
+    //       data: {
+    //         labels: selLabelNamesArr as string[],
+    //         datasets: [
+    //           {
+    //             label: "Number of NbDocks",
+    //             data: selAreaNbEmptyDocks,
+    //           },
+    //         ],
+    //       },
+    //       options: pieChartOptions,
+    //     });
+
+    //     myPieChartNbDocks = new Chart(pieChartCanvasNbDocks, {
+    //       type: "pie",
+    //       data: {
+    //         labels: selLabelNamesArr as string[],
+    //         datasets: [
+    //           {
+    //             label: "Number of NbDocks",
+    //             data: selAreaNbDocks,
+    //           },
+    //         ],
+    //       },
+    //       options: pieChartOptions,
+    //     });
+    //   }
+    // });
+
     return main;
   } catch (e) {
     const main = document.createElement("main");
