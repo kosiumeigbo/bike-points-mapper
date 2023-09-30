@@ -34,7 +34,10 @@ export const getDataForAllBikePoints = async function (url: string) {
 
 export const getDataForAllBikePoints = async function (url: string) {
   try {
-    const response = await fetch(url);
+    const response: Response = await fetch(url);
+    if (!response.ok) {
+      throw Error(noServerData);
+    }
     const allBikePoints = (await response.json()) as BikePoint[];
 
     const bikePointsByArea = new Map<string, BikePoint[]>();
