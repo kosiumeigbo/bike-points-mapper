@@ -152,6 +152,115 @@ export const getDataForCharts = function (
   ];
 };
 
+/*
+const renderAllCharts = function (
+  drpDwnListValue: string,
+  srtedBkPtsArr: {
+    name: string;
+    bikePoints: BikePoint[];
+  }[],
+  myBarChar: Chart | any,
+  myPieCharNbBikes: Chart | any,
+  myPieCharNbDocks: Chart | any,
+  myPieCharNbEmptyDocks: Chart | any,
+  barCharCanvas: HTMLCanvasElement,
+  pieCharCanvasNbBikes: HTMLCanvasElement,
+  pieCharCanvasNbEmptyDocks: HTMLCanvasElement,
+  pieCharCanvasNbDocks: HTMLCanvasElement
+): void {
+  const [
+    selAreaObj,
+    selLabelNamesArr,
+    selAreaNbBikes,
+    selAreaNbEmptyDocks,
+    selAreaNbDocks,
+  ] = getDataForCharts(drpDwnListValue, srtedBkPtsArr);
+
+  console.clear();
+  console.log(selAreaObj);
+  console.log(selLabelNamesArr);
+  console.log(selAreaNbBikes);
+  console.log(selAreaNbEmptyDocks);
+  console.log(selAreaNbDocks);
+
+  if (
+    myBarChar instanceof Chart &&
+    myPieCharNbBikes instanceof Chart &&
+    myPieCharNbDocks instanceof Chart &&
+    myPieCharNbEmptyDocks instanceof Chart
+  ) {
+    myBarChar.destroy();
+    myPieCharNbBikes.destroy();
+    myPieCharNbDocks.destroy();
+    myPieCharNbEmptyDocks.destroy();
+  }
+
+  myBarChar = new Chart(barCharCanvas, {
+    type: "bar",
+    data: {
+      labels: selLabelNamesArr as string[],
+      datasets: [
+        {
+          label: "Number of NbBikes",
+          data: selAreaNbBikes,
+        },
+        {
+          label: "Number of NbEmptyDocks",
+          data: selAreaNbEmptyDocks,
+        },
+        {
+          label: "Number of NbDocks",
+          data: selAreaNbDocks,
+        },
+      ],
+    },
+    options: barChartOptions,
+  });
+
+  myPieCharNbBikes = new Chart(pieCharCanvasNbBikes, {
+    type: "pie",
+    data: {
+      labels: selLabelNamesArr as string[],
+      datasets: [
+        {
+          label: "Number of NbBikes",
+          data: selAreaNbBikes,
+        },
+      ],
+    },
+    options: pieChartOptions,
+  });
+
+  myPieCharNbEmptyDocks = new Chart(pieCharCanvasNbEmptyDocks, {
+    type: "pie",
+    data: {
+      labels: selLabelNamesArr as string[],
+      datasets: [
+        {
+          label: "Number of NbDocks",
+          data: selAreaNbEmptyDocks,
+        },
+      ],
+    },
+    options: pieChartOptions,
+  });
+
+  myPieCharNbDocks = new Chart(pieCharCanvasNbDocks, {
+    type: "pie",
+    data: {
+      labels: selLabelNamesArr as string[],
+      datasets: [
+        {
+          label: "Number of NbDocks",
+          data: selAreaNbDocks,
+        },
+      ],
+    },
+    options: pieChartOptions,
+  });
+};
+*/
+
 /* ----------------- Build Page Function ---------------- */
 
 export const buildPage = async function (url: string) {
