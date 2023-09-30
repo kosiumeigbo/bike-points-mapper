@@ -395,6 +395,21 @@ export const buildPage = async function (url: string) {
 
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
+      /*
+      renderAllCharts(
+        dropDownList.value,
+        sortedBikePointsArray,
+        myBarChart,
+        myPieChartNbBikes,
+        myPieChartNbDocks,
+        myPieChartNbEmptyDocks,
+        barChartCanvas,
+        pieChartCanvasNbBikes,
+        pieChartCanvasNbEmptyDocks,
+        pieChartCanvasNbDocks
+      );
+      */
+
       const [
         selAreaObj,
         selLabelNamesArr,
