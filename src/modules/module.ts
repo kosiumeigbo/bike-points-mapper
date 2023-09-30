@@ -245,7 +245,10 @@ export const buildPage = async function (url: string) {
       "beforeend",
       pieChartCanvasNbBikes
     );
-    main.insertAdjacentElement("beforeend", pieChartContainerNbBikes);
+    allPieChartsContainer.insertAdjacentElement(
+      "beforeend",
+      pieChartContainerNbBikes
+    );
 
     // Pie Chart Canvas NbEmptyDocks
     pieChartCanvasNbEmptyDocks.id = "pie-chart-nbemptydocks" as string;
@@ -255,7 +258,10 @@ export const buildPage = async function (url: string) {
       "beforeend",
       pieChartCanvasNbEmptyDocks
     );
-    main.insertAdjacentElement("beforeend", pieChartContainerNbEmptyDocks);
+    allPieChartsContainer.insertAdjacentElement(
+      "beforeend",
+      pieChartContainerNbEmptyDocks
+    );
 
     // Pie Chart Canvas NbDocks
     pieChartCanvasNbDocks.id = "pie-chart-nbdocks" as string;
@@ -265,7 +271,12 @@ export const buildPage = async function (url: string) {
       "beforeend",
       pieChartCanvasNbDocks
     );
-    main.insertAdjacentElement("beforeend", pieChartContainerNbDocks);
+    allPieChartsContainer.insertAdjacentElement(
+      "beforeend",
+      pieChartContainerNbDocks
+    );
+
+    main.insertAdjacentElement("beforeend", allPieChartsContainer);
 
     let myBarChart: Chart | any;
     let myPieChartNbBikes: Chart | any;
