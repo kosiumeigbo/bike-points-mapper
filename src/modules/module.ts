@@ -4,6 +4,22 @@ import L from "leaflet";
 
 const noServerData: string = "Could not get data from server";
 
+const handleResize = (chart: Chart) => {
+  chart.resize();
+};
+
+const barChartOptions = {
+  responsive: true,
+  maintainAspectRatio: true,
+  onResize: handleResize,
+};
+
+const pieChartOptions = {
+  responsive: true,
+  maintainAspectRatio: true,
+  onResize: handleResize,
+};
+
 /* 
 export const getDataForAllBikePoints = async function (url: string) {
   try {
@@ -456,6 +472,7 @@ export const buildPage = async function (url: string) {
             },
           ],
         },
+        options: barChartOptions,
       });
 
       myPieChartNbBikes = new Chart(pieChartCanvasNbBikes, {
@@ -469,6 +486,7 @@ export const buildPage = async function (url: string) {
             },
           ],
         },
+        options: pieChartOptions,
       });
 
       myPieChartNbEmptyDocks = new Chart(pieChartCanvasNbEmptyDocks, {
@@ -482,6 +500,7 @@ export const buildPage = async function (url: string) {
             },
           ],
         },
+        options: pieChartOptions,
       });
 
       myPieChartNbDocks = new Chart(pieChartCanvasNbDocks, {
@@ -495,6 +514,7 @@ export const buildPage = async function (url: string) {
             },
           ],
         },
+        options: pieChartOptions,
       });
     });
 
