@@ -46,19 +46,93 @@ body {
 }
 
 main {
-  width: 100%;
+  width: min(90%, $screen-xl);
   margin-inline: auto;
 }
 
-main {
-  width: max(90%, $screen-xl);
-  margin-inline: auto;
+#bar-chart-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  margin-bottom: 1rem;
 }
 
-.chart-area {
-  width: 100%;
-  height: auto;
+.pie-chart-area {
+  display: inline-block;
+  width: calc(100% / 3);
+  aspect-ratio: 1 / 1;
+  position: relative;
 }
+
+#pie-chart-container-nbbikes,
+#pie-chart-container-nbemptydocks,
+#pie-chart-container-nbdocks {
+  @include respond-l() {
+    width: calc(100% / 2);
+  }
+
+  @include respond-m() {
+    width: 100%;
+    padding: 0 4rem;
+    margin-bottom: -7rem;
+  }
+
+  @include respond-s() {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 0;
+  }
+}
+
+/*
+#pie-chart-container-nbbikes {
+  @include respond-l() {
+    width: calc(100% / 2);
+  }
+
+  @include respond-m() {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  @include respond-s() {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+#pie-chart-container-nbemptydocks {
+  @include respond-l() {
+    width: calc(100% / 2);
+  }
+
+  @include respond-m() {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  @include respond-s() {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+#pie-chart-container-nbdocks {
+  @include respond-l() {
+    width: calc(100% / 2);
+  }
+
+  @include respond-m() {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  @include respond-s() {
+    width: 100%;
+    padding: 0;
+  }
+}
+*/
 
 /* 
 .page-error {
