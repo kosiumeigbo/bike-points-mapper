@@ -328,14 +328,9 @@ export const buildPage = async function (url: string) {
 
     const barChartCanvas = document.createElement("canvas");
     barChartCanvas.id = "bar-chart" as string;
-    barChartCanvas.classList.add("chart-area");
 
     barChartContainer.insertAdjacentElement("beforeend", barChartCanvas);
     main.insertAdjacentElement("beforeend", barChartContainer);
-
-    // Container for all pie charts
-    const allPieChartsContainer = document.createElement("div");
-    allPieChartsContainer.classList.add("pie-charts-container");
 
     // Pie Chart Containers and Canvas
     const [
@@ -349,9 +344,14 @@ export const buildPage = async function (url: string) {
     ];
 
     pieChartContainerNbBikes.id = "pie-chart-container-nbbikes" as string;
+    pieChartContainerNbBikes.classList.add("pie-chart-area");
+
     pieChartContainerNbEmptyDocks.id =
       "pie-chart-container-nbemptydocks" as string;
+    pieChartContainerNbEmptyDocks.classList.add("pie-chart-area");
+
     pieChartContainerNbDocks.id = "pie-chart-container-nbdocks" as string;
+    pieChartContainerNbDocks.classList.add("pie-chart-area");
 
     const [
       pieChartCanvasNbBikes,
@@ -365,44 +365,27 @@ export const buildPage = async function (url: string) {
 
     // Pie Chart Canvas NbBikes
     pieChartCanvasNbBikes.id = "pie-chart-nbbikes" as string;
-    pieChartCanvasNbBikes.classList.add("chart-area");
-
     pieChartContainerNbBikes.insertAdjacentElement(
       "beforeend",
       pieChartCanvasNbBikes
     );
-    allPieChartsContainer.insertAdjacentElement(
-      "beforeend",
-      pieChartContainerNbBikes
-    );
+    main.insertAdjacentElement("beforeend", pieChartContainerNbBikes);
 
     // Pie Chart Canvas NbEmptyDocks
     pieChartCanvasNbEmptyDocks.id = "pie-chart-nbemptydocks" as string;
-    pieChartCanvasNbEmptyDocks.classList.add("chart-area");
-
     pieChartContainerNbEmptyDocks.insertAdjacentElement(
       "beforeend",
       pieChartCanvasNbEmptyDocks
     );
-    allPieChartsContainer.insertAdjacentElement(
-      "beforeend",
-      pieChartContainerNbEmptyDocks
-    );
+    main.insertAdjacentElement("beforeend", pieChartContainerNbEmptyDocks);
 
     // Pie Chart Canvas NbDocks
     pieChartCanvasNbDocks.id = "pie-chart-nbdocks" as string;
-    pieChartCanvasNbDocks.classList.add("chart-area");
-
     pieChartContainerNbDocks.insertAdjacentElement(
       "beforeend",
       pieChartCanvasNbDocks
     );
-    allPieChartsContainer.insertAdjacentElement(
-      "beforeend",
-      pieChartContainerNbDocks
-    );
-
-    main.insertAdjacentElement("beforeend", allPieChartsContainer);
+    main.insertAdjacentElement("beforeend", pieChartContainerNbDocks);
 
     let myBarChart: Chart | any;
     let myPieChartNbBikes: Chart | any;
