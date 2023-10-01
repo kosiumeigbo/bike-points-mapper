@@ -20,34 +20,6 @@ const pieChartOptions = {
   onResize: handleResize,
 };
 
-/* 
-export const getDataForAllBikePoints = async function (url: string) {
-  try {
-    const response = await fetch(url);
-    const allBikePoints = (await response.json()) as BikePoint[];
-
-    const bikePointArea = allBikePoints.map((bikepoint: any) =>
-      bikepoint.commonName.split(",").at(-1).trim()
-    );
-
-    const uniqueBikePoints = Array.from(new Set<string>(bikePointArea));
-
-    const result = uniqueBikePoints.map((bikePoint) => {
-      const name = bikePoint;
-      const bikePoints = allBikePoints.filter((bkPoint) =>
-        bkPoint.commonName.includes(name)
-      );
-
-      return {name, bikePoints};
-    });
-
-    return result;
-  } catch (e) {
-    console.log(e);
-  }
-};
-*/
-
 export const getDataForAllBikePoints = async function (url: string) {
   try {
     const response: Response = await fetch(url);
@@ -168,115 +140,6 @@ export const getDataForCharts = function (
   ];
 };
 
-/*
-const renderAllCharts = function (
-  drpDwnListValue: string,
-  srtedBkPtsArr: {
-    name: string;
-    bikePoints: BikePoint[];
-  }[],
-  myBarChar: Chart | any,
-  myPieCharNbBikes: Chart | any,
-  myPieCharNbDocks: Chart | any,
-  myPieCharNbEmptyDocks: Chart | any,
-  barCharCanvas: HTMLCanvasElement,
-  pieCharCanvasNbBikes: HTMLCanvasElement,
-  pieCharCanvasNbEmptyDocks: HTMLCanvasElement,
-  pieCharCanvasNbDocks: HTMLCanvasElement
-): void {
-  const [
-    selAreaObj,
-    selLabelNamesArr,
-    selAreaNbBikes,
-    selAreaNbEmptyDocks,
-    selAreaNbDocks,
-  ] = getDataForCharts(drpDwnListValue, srtedBkPtsArr);
-
-  console.clear();
-  console.log(selAreaObj);
-  console.log(selLabelNamesArr);
-  console.log(selAreaNbBikes);
-  console.log(selAreaNbEmptyDocks);
-  console.log(selAreaNbDocks);
-
-  if (
-    myBarChar instanceof Chart &&
-    myPieCharNbBikes instanceof Chart &&
-    myPieCharNbDocks instanceof Chart &&
-    myPieCharNbEmptyDocks instanceof Chart
-  ) {
-    myBarChar.destroy();
-    myPieCharNbBikes.destroy();
-    myPieCharNbDocks.destroy();
-    myPieCharNbEmptyDocks.destroy();
-  }
-
-  myBarChar = new Chart(barCharCanvas, {
-    type: "bar",
-    data: {
-      labels: selLabelNamesArr as string[],
-      datasets: [
-        {
-          label: "Number of NbBikes",
-          data: selAreaNbBikes,
-        },
-        {
-          label: "Number of NbEmptyDocks",
-          data: selAreaNbEmptyDocks,
-        },
-        {
-          label: "Number of NbDocks",
-          data: selAreaNbDocks,
-        },
-      ],
-    },
-    options: barChartOptions,
-  });
-
-  myPieCharNbBikes = new Chart(pieCharCanvasNbBikes, {
-    type: "pie",
-    data: {
-      labels: selLabelNamesArr as string[],
-      datasets: [
-        {
-          label: "Number of NbBikes",
-          data: selAreaNbBikes,
-        },
-      ],
-    },
-    options: pieChartOptions,
-  });
-
-  myPieCharNbEmptyDocks = new Chart(pieCharCanvasNbEmptyDocks, {
-    type: "pie",
-    data: {
-      labels: selLabelNamesArr as string[],
-      datasets: [
-        {
-          label: "Number of NbDocks",
-          data: selAreaNbEmptyDocks,
-        },
-      ],
-    },
-    options: pieChartOptions,
-  });
-
-  myPieCharNbDocks = new Chart(pieCharCanvasNbDocks, {
-    type: "pie",
-    data: {
-      labels: selLabelNamesArr as string[],
-      datasets: [
-        {
-          label: "Number of NbDocks",
-          data: selAreaNbDocks,
-        },
-      ],
-    },
-    options: pieChartOptions,
-  });
-};
-*/
-
 /* ----------------- Build Page Function ---------------- */
 
 export const buildPage = async function (url: string) {
@@ -394,21 +257,6 @@ export const buildPage = async function (url: string) {
 
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
-      /*
-      renderAllCharts(
-        dropDownList.value,
-        sortedBikePointsArray,
-        myBarChart,
-        myPieChartNbBikes,
-        myPieChartNbDocks,
-        myPieChartNbEmptyDocks,
-        barChartCanvas,
-        pieChartCanvasNbBikes,
-        pieChartCanvasNbEmptyDocks,
-        pieChartCanvasNbDocks
-      );
-      */
-
       const [
         selAreaObj,
         selLabelNamesArr,
@@ -500,101 +348,6 @@ export const buildPage = async function (url: string) {
         options: pieChartOptions,
       });
     });
-
-    // window.addEventListener("resize", function () {
-    //   if (dropDownList.value != "Choose an option") {
-    //     const [
-    //       selAreaObj,
-    //       selLabelNamesArr,
-    //       selAreaNbBikes,
-    //       selAreaNbEmptyDocks,
-    //       selAreaNbDocks,
-    //     ] = getDataForCharts(dropDownList.value, sortedBikePointsArray);
-
-    //     console.clear();
-    //     console.log(selAreaObj);
-    //     console.log(selLabelNamesArr);
-    //     console.log(selAreaNbBikes);
-    //     console.log(selAreaNbEmptyDocks);
-    //     console.log(selAreaNbDocks);
-
-    //     if (
-    //       myBarChart instanceof Chart &&
-    //       myPieChartNbBikes instanceof Chart &&
-    //       myPieChartNbDocks instanceof Chart &&
-    //       myPieChartNbEmptyDocks instanceof Chart
-    //     ) {
-    //       myBarChart.destroy();
-    //       myPieChartNbBikes.destroy();
-    //       myPieChartNbDocks.destroy();
-    //       myPieChartNbEmptyDocks.destroy();
-    //     }
-
-    //     myBarChart = new Chart(barChartCanvas, {
-    //       type: "bar",
-    //       data: {
-    //         labels: selLabelNamesArr as string[],
-    //         datasets: [
-    //           {
-    //             label: "Number of NbBikes",
-    //             data: selAreaNbBikes,
-    //           },
-    //           {
-    //             label: "Number of NbEmptyDocks",
-    //             data: selAreaNbEmptyDocks,
-    //           },
-    //           {
-    //             label: "Number of NbDocks",
-    //             data: selAreaNbDocks,
-    //           },
-    //         ],
-    //       },
-    //       options: barChartOptions,
-    //     });
-
-    //     myPieChartNbBikes = new Chart(pieChartCanvasNbBikes, {
-    //       type: "pie",
-    //       data: {
-    //         labels: selLabelNamesArr as string[],
-    //         datasets: [
-    //           {
-    //             label: "Number of NbBikes",
-    //             data: selAreaNbBikes,
-    //           },
-    //         ],
-    //       },
-    //       options: pieChartOptions,
-    //     });
-
-    //     myPieChartNbEmptyDocks = new Chart(pieChartCanvasNbEmptyDocks, {
-    //       type: "pie",
-    //       data: {
-    //         labels: selLabelNamesArr as string[],
-    //         datasets: [
-    //           {
-    //             label: "Number of NbDocks",
-    //             data: selAreaNbEmptyDocks,
-    //           },
-    //         ],
-    //       },
-    //       options: pieChartOptions,
-    //     });
-
-    //     myPieChartNbDocks = new Chart(pieChartCanvasNbDocks, {
-    //       type: "pie",
-    //       data: {
-    //         labels: selLabelNamesArr as string[],
-    //         datasets: [
-    //           {
-    //             label: "Number of NbDocks",
-    //             data: selAreaNbDocks,
-    //           },
-    //         ],
-    //       },
-    //       options: pieChartOptions,
-    //     });
-    //   }
-    // });
 
     return main;
   } catch (e) {
