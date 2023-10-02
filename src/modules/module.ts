@@ -250,10 +250,10 @@ export const buildPage = async function (url: string) {
     );
     main.insertAdjacentElement("beforeend", pieChartContainerNbDocks);
 
-    let myBarChart: Chart | any;
-    let myPieChartNbBikes: Chart | any;
-    let myPieChartNbEmptyDocks: Chart | any;
-    let myPieChartNbDocks: Chart | any;
+    let myBarChart: Chart | unknown;
+    let myPieChartNbBikes: Chart | unknown;
+    let myPieChartNbEmptyDocks: Chart | unknown;
+    let myPieChartNbDocks: Chart | unknown;
 
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
