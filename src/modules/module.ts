@@ -185,6 +185,11 @@ export const buildPage = async function (url: string) {
     });
     main.insertAdjacentElement("beforeend", dropDownList);
 
+    // Div creation for map
+    const mapDiv: HTMLDivElement = document.createElement("div");
+    mapDiv.id = "map" as string;
+    main.insertAdjacentElement("beforeend", mapDiv);
+
     // Bar Chart Container and Canvas
     const barChartContainer = document.createElement("div");
     barChartContainer.id = "bar-chart-container" as string;
