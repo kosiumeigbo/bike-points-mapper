@@ -50,6 +50,11 @@ main {
   margin-inline: auto;
 }
 
+#map {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
 #bar-chart-container {
   position: relative;
   width: 100%;
