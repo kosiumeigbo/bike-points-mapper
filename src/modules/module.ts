@@ -260,6 +260,11 @@ export const buildPage = async function (url: string) {
     let myPieChartNbEmptyDocks: Chart | unknown;
     let myPieChartNbDocks: Chart | unknown;
 
+    let map: L.Map = L.map(mapDiv, {
+      center: [51.505, -0.09],
+      zoom: 13,
+    });
+
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
       const [
