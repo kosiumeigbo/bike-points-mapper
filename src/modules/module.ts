@@ -156,22 +156,22 @@ export const buildPage = async function (url: string) {
     // console.log(sortedBikePointsArray);
 
     // Main page content container
-    const main = document.createElement("main");
+    const main: HTMLElement = document.createElement("main");
 
     // Page Title Heading
     main.insertAdjacentHTML("beforeend", fullPageTitle());
 
     // Label for dropdown list
-    const label = document.createElement("label");
+    const label: HTMLLabelElement = document.createElement("label");
     label.setAttribute("for", "areas");
     label.textContent = "Choose an area:";
     main.insertAdjacentElement("beforeend", label);
 
     // Drop down list
-    const dropDownList = document.createElement("select");
+    const dropDownList: HTMLSelectElement = document.createElement("select");
     dropDownList.id = "areas";
 
-    const disabledOption = document.createElement("option");
+    const disabledOption: HTMLOptionElement = document.createElement("option");
     disabledOption.textContent = "Choose an option" as string; // Creating disabled option
     disabledOption.setAttribute("selected", "");
     disabledOption.setAttribute("disabled", "");
@@ -191,10 +191,10 @@ export const buildPage = async function (url: string) {
     main.insertAdjacentElement("beforeend", mapDiv);
 
     // Bar Chart Container and Canvas
-    const barChartContainer = document.createElement("div");
+    const barChartContainer: HTMLDivElement = document.createElement("div");
     barChartContainer.id = "bar-chart-container" as string;
 
-    const barChartCanvas = document.createElement("canvas");
+    const barChartCanvas: HTMLCanvasElement = document.createElement("canvas");
     barChartCanvas.id = "bar-chart" as string;
 
     barChartContainer.insertAdjacentElement("beforeend", barChartCanvas);
