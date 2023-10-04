@@ -193,6 +193,7 @@ export const buildPage = async function (url: string) {
     // Bar Chart Container and Canvas
     const barChartContainer: HTMLDivElement = document.createElement("div");
     barChartContainer.id = "bar-chart-container" as string;
+    barChartContainer.classList.add("hidden");
 
     const barChartCanvas: HTMLCanvasElement = document.createElement("canvas");
     barChartCanvas.id = "bar-chart" as string;
@@ -213,13 +214,16 @@ export const buildPage = async function (url: string) {
 
     pieChartContainerNbBikes.id = "pie-chart-container-nbbikes" as string;
     pieChartContainerNbBikes.classList.add("pie-chart-area");
+    pieChartContainerNbBikes.classList.add("hidden");
 
     pieChartContainerNbEmptyDocks.id =
       "pie-chart-container-nbemptydocks" as string;
     pieChartContainerNbEmptyDocks.classList.add("pie-chart-area");
+    pieChartContainerNbEmptyDocks.classList.add("hidden");
 
     pieChartContainerNbDocks.id = "pie-chart-container-nbdocks" as string;
     pieChartContainerNbDocks.classList.add("pie-chart-area");
+    pieChartContainerNbDocks.classList.add("hidden");
 
     const [
       pieChartCanvasNbBikes,
