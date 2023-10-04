@@ -4,6 +4,9 @@ import L from "leaflet";
 
 const noServerData: string = "Could not get data from server";
 
+///////////////////////////////////////////////////////////////////
+
+/* Chart JS Starts */
 const handleResize = (chart: Chart) => {
   chart.resize();
 };
@@ -19,6 +22,7 @@ const pieChartOptions = {
   maintainAspectRatio: true,
   onResize: handleResize,
 };
+/* Chart JS Ends */
 
 export const getDataForAllBikePoints = async function (url: string) {
   try {
