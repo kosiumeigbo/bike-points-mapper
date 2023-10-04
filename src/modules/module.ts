@@ -361,6 +361,13 @@ export const buildPage = async function (url: string) {
         },
         options: pieChartOptions,
       });
+
+      barChartContainer.classList.remove("hidden");
+      pieChartContainerNbBikes.classList.remove("hidden");
+      pieChartContainerNbEmptyDocks.classList.remove("hidden");
+      pieChartContainerNbDocks.classList.remove("hidden");
+
+      barChartContainer.scrollIntoView({behavior: "smooth"});
     });
 
     return main;
