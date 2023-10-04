@@ -32,6 +32,12 @@ $screen-s: 26.25rem; // 420px
   }
 }
 
+@mixin respond-any($size) {
+  @media (max-width: $size) {
+    @content;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -55,8 +61,18 @@ main {
 }
 
 #map {
-  width: 100%;
+  width: 60%;
   aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  border: 1px solid black;
+
+  @include respond-l() {
+    width: 32rem;
+  }
+
+  @include respond-any(36rem) {
+    width: 100%;
+  }
 }
 
 #bar-chart-container {
@@ -147,3 +163,7 @@ main {
 .page-error {
 }
  */
+
+.hidden {
+  display: none;
+}
