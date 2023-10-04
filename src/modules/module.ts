@@ -4,6 +4,69 @@ import L from "leaflet";
 
 const noServerData: string = "Could not get data from server";
 
+/* Leaflet Starts */
+const minZoom: number = 0;
+const maxZoom: number = 20;
+
+const googleStreets: L.TileLayer = L.tileLayer(
+  "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+  {
+    minZoom,
+    maxZoom,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Google Maps",
+  }
+);
+
+const googleHybrid = L.tileLayer(
+  "http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
+  {
+    minZoom,
+    maxZoom,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Google Maps",
+  }
+);
+
+const googleSat = L.tileLayer(
+  "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+  {
+    minZoom,
+    maxZoom,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Google Maps",
+  }
+);
+
+const googleTerrain = L.tileLayer(
+  "http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}",
+  {
+    minZoom,
+    maxZoom,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Google Maps",
+  }
+);
+
+const baseMaps = {
+  "Google Street": googleStreets,
+  "Google Hybrid": googleHybrid,
+  "Google Satellite": googleSat,
+  "Google Terrain": googleTerrain,
+};
+
+const initMapOptions: L.MapOptions = {
+  // center: [51.5080964, -0.135468],
+  zoom: 13,
+  minZoom,
+  maxZoom,
+  zoomSnap: 0.5,
+  zoomDelta: 0.5,
+  touchZoom: true,
+  layers: [googleStreets],
+};
+/* Leaflet Ends */
+
 ///////////////////////////////////////////////////////////////////
 
 /* Chart JS Starts */
