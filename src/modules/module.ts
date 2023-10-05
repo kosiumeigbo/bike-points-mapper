@@ -152,11 +152,10 @@ export const getDataForCharts = function (
     name: string;
     bikePoints: BikePoint[];
   }[]
-): (
-  | string[]
-  | {
-      name: string;
-      bikePoints: BikePoint[];
+): [
+  {
+    name: string;
+    bikePoints: BikePoint[];
   },
   string[],
   number[],
