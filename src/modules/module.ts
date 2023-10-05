@@ -458,7 +458,7 @@ export const buildPage = async function (url: string) {
       pieChartContainerNbEmptyDocks.classList.remove("hidden");
       pieChartContainerNbDocks.classList.remove("hidden");
 
-      barChartContainer.scrollIntoView({behavior: "smooth"});
+      // barChartContainer.scrollIntoView({behavior: "smooth"});
     });
 
     return main;
