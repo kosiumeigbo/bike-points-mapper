@@ -64,6 +64,8 @@ const initMapOptions: L.MapOptions = {
   zoomDelta: 0.5,
   touchZoom: true,
   layers: [googleStreets],
+  closePopupOnClick: false,
+};
 };
 /* Leaflet Ends */
 
