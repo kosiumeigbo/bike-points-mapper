@@ -357,6 +357,9 @@ export const buildPage = async function (url: string) {
       map.invalidateSize();
     }, 0);
 
+    // Initialise the array that will hold the map popups
+    let toHoldPopUps: L.Popup[] = [];
+
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
       const [
