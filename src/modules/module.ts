@@ -157,9 +157,12 @@ export const getDataForCharts = function (
   | {
       name: string;
       bikePoints: BikePoint[];
-    }
-  | number[]
-)[] {
+  },
+  string[],
+  number[],
+  number[],
+  number[]
+] {
   const selectAreaObj = sortedArr.find(
     (areaObj) => selArea === areaObj.name
   ) as {
