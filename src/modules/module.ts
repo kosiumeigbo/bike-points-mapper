@@ -459,6 +459,22 @@ export const buildPage = async function (url: string) {
       pieChartContainerNbDocks.classList.remove("hidden");
 
       // barChartContainer.scrollIntoView({behavior: "smooth"});
+
+      const selAreaBkPoints: BikePoint[] = selAreaObj.bikePoints;
+
+      if (toHoldPopUps.length !== 0) {
+        toHoldPopUps.forEach((bkPoint) => {
+          bkPoint.remove();
+        });
+        toHoldPopUps = [];
+      }
+
+      toHoldPopUps = selAreaBkPoints.map((bkPoint) => {
+        return L.popup(myPopUpOptions)
+          .setLatLng([bkPoint.lat, bkPoint.lon])
+          .setContent("Hello")
+          .addTo(map);
+      });
     });
 
     return main;
