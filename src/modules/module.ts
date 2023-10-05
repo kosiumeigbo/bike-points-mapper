@@ -75,6 +75,11 @@ const myBikeIcon: L.Icon = L.icon({
 });
 */
 
+const myPopUpOptions: L.PopupOptions = {
+  autoPan: false,
+  closeButton: false,
+  autoClose: false,
+  className: "pop-up",
 };
 /* Leaflet Ends */
 
