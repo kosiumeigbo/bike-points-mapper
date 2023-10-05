@@ -66,6 +66,15 @@ const initMapOptions: L.MapOptions = {
   layers: [googleStreets],
   closePopupOnClick: false,
 };
+/*
+const myBikeIcon: L.Icon = L.icon({
+  iconUrl: "../../images/icon.png",
+  iconSize: [100, 100],
+  // iconAnchor: [15, -13],
+  // popupAnchor: [0, 13],
+});
+*/
+
 };
 /* Leaflet Ends */
 
