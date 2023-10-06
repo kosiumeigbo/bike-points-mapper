@@ -4,6 +4,150 @@ import L from "leaflet";
 
 const noServerData: string = "Could not get data from server";
 
+/* Leaflet Starts */
+const minZoom: number = 0;
+const maxZoom: number = 20;
+
+const googleStreets: L.TileLayer = L.tileLayer(
+  "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+  {
+    minZoom,
+    maxZoom,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Google Maps",
+  }
+);
+
+const googleHybrid = L.tileLayer(
+  "http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
+  {
+    minZoom,
+    maxZoom,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Google Maps",
+  }
+);
+
+const googleSat = L.tileLayer(
+  "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+  {
+    minZoom,
+    maxZoom,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Google Maps",
+  }
+);
+
+const googleTerrain = L.tileLayer(
+  "http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}",
+  {
+    minZoom,
+    maxZoom,
+    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    attribution: "Google Maps",
+  }
+);
+
+const baseMaps = {
+  "Google Street": googleStreets,
+  "Google Hybrid": googleHybrid,
+  "Google Satellite": googleSat,
+  "Google Terrain": googleTerrain,
+};
+
+const initMapOptions: L.MapOptions = {
+  zoom: 13,
+  minZoom,
+  maxZoom,
+  zoomSnap: 0.5,
+  zoomDelta: 0.5,
+  touchZoom: true,
+  layers: [googleStreets],
+  closePopupOnClick: false,
+};
+
+const myPopUpOptions: L.PopupOptions = {
+  autoPan: false,
+  closeButton: false,
+  autoClose: false,
+  maxWidth: 100,
+  keepInView: true,
+};
+
+const myZoomPanOptions: L.FitBoundsOptions = {
+  easeLinearity: 0.6,
+  duration: 0.25,
+};
+
+// Functions to get LatLngBounds for each selected area
+const getSouthLat = function (
+  arrBikePoints: BikePoint[],
+  oldSouthLat: number
+): number {
+  let southLat: number | undefined = arrBikePoints[0]?.lat;
+  if (southLat === undefined) return oldSouthLat;
+
+  for (const bkPoint of arrBikePoints) {
+    if (bkPoint.lat < southLat) {
+      southLat = bkPoint.lat;
+      continue;
+    }
+  }
+  return southLat;
+};
+
+const getNorthLat = function (
+  arrBikePoints: BikePoint[],
+  oldNorthLat: number
+): number {
+  let northLat: number | undefined = arrBikePoints[0]?.lat;
+  if (northLat === undefined) return oldNorthLat;
+
+  for (const bkPoint of arrBikePoints) {
+    if (bkPoint.lat > northLat) {
+      northLat = bkPoint.lat;
+      continue;
+    }
+  }
+  return northLat;
+};
+
+const getWestLon = function (
+  arrBikePoints: BikePoint[],
+  oldWestLon: number
+): number {
+  let westLon: number | undefined = arrBikePoints[0]?.lon;
+  if (westLon === undefined) return oldWestLon;
+
+  for (const bkPoint of arrBikePoints) {
+    if (bkPoint.lon < westLon) {
+      westLon = bkPoint.lon;
+      continue;
+    }
+  }
+  return westLon;
+};
+
+const getEastLon = function (
+  arrBikePoints: BikePoint[],
+  oldEastLon: number
+): number {
+  let eastLon: number | undefined = arrBikePoints[0]?.lon;
+  if (eastLon === undefined) return oldEastLon;
+
+  for (const bkPoint of arrBikePoints) {
+    if (bkPoint.lon > eastLon) {
+      eastLon = bkPoint.lon;
+      continue;
+    }
+  }
+  return eastLon;
+};
+/* Leaflet Ends */
+
+///////////////////////////////////////////////////////////////////
+
+/* Chart JS Starts */
 const handleResize = (chart: Chart) => {
   chart.resize();
 };
@@ -19,6 +163,7 @@ const pieChartOptions = {
   maintainAspectRatio: true,
   onResize: handleResize,
 };
+/* Chart JS Ends */
 
 export const getDataForAllBikePoints = async function (url: string) {
   try {
@@ -85,14 +230,16 @@ export const getDataForCharts = function (
     name: string;
     bikePoints: BikePoint[];
   }[]
-): (
-  | string[]
-  | {
-      name: string;
-      bikePoints: BikePoint[];
-    }
-  | number[]
-)[] {
+): [
+  {
+    name: string;
+    bikePoints: BikePoint[];
+  },
+  string[],
+  number[],
+  number[],
+  number[]
+] {
   const selectAreaObj = sortedArr.find(
     (areaObj) => selArea === areaObj.name
   ) as {
@@ -156,40 +303,40 @@ export const buildPage = async function (url: string) {
     // console.log(sortedBikePointsArray);
 
     // Main page content container
-    const main = document.createElement("main");
+    const main: HTMLElement = document.createElement("main");
 
     // Page Title Heading
     main.insertAdjacentHTML("beforeend", fullPageTitle());
 
     // Label for dropdown list
-    const label = document.createElement("label");
+    const label: HTMLLabelElement = document.createElement("label");
     label.setAttribute("for", "areas");
     label.textContent = "Choose an area:";
     main.insertAdjacentElement("beforeend", label);
 
     // Drop down list
-    const dropDownList = document.createElement("select");
+    const dropDownList: HTMLSelectElement = document.createElement("select");
     dropDownList.id = "areas";
+    const disabledOption: HTMLOptionElement = document.createElement("option");
 
-    const disabledOption = document.createElement("option");
-    disabledOption.textContent = "Choose an option" as string; // Creating disabled option
+    // Creating disabled option and starting it off with "Getting location" while map loads location
+    disabledOption.textContent = "Getting location..." as string;
     disabledOption.setAttribute("selected", "");
     disabledOption.setAttribute("disabled", "");
     dropDownList.insertAdjacentElement("afterbegin", disabledOption);
-
-    sortedBikePointsArray.forEach((obj) => {
-      dropDownList.insertAdjacentHTML(
-        "beforeend",
-        getSelectOptionDropDownList(obj)
-      );
-    });
     main.insertAdjacentElement("beforeend", dropDownList);
 
-    // Bar Chart Container and Canvas
-    const barChartContainer = document.createElement("div");
-    barChartContainer.id = "bar-chart-container" as string;
+    // Div creation for map
+    const mapDiv: HTMLDivElement = document.createElement("div");
+    mapDiv.id = "map" as string;
+    main.insertAdjacentElement("beforeend", mapDiv);
 
-    const barChartCanvas = document.createElement("canvas");
+    // Bar Chart Container and Canvas
+    const barChartContainer: HTMLDivElement = document.createElement("div");
+    barChartContainer.id = "bar-chart-container" as string;
+    barChartContainer.classList.add("hidden");
+
+    const barChartCanvas: HTMLCanvasElement = document.createElement("canvas");
     barChartCanvas.id = "bar-chart" as string;
 
     barChartContainer.insertAdjacentElement("beforeend", barChartCanvas);
@@ -208,13 +355,16 @@ export const buildPage = async function (url: string) {
 
     pieChartContainerNbBikes.id = "pie-chart-container-nbbikes" as string;
     pieChartContainerNbBikes.classList.add("pie-chart-area");
+    pieChartContainerNbBikes.classList.add("hidden");
 
     pieChartContainerNbEmptyDocks.id =
       "pie-chart-container-nbemptydocks" as string;
     pieChartContainerNbEmptyDocks.classList.add("pie-chart-area");
+    pieChartContainerNbEmptyDocks.classList.add("hidden");
 
     pieChartContainerNbDocks.id = "pie-chart-container-nbdocks" as string;
     pieChartContainerNbDocks.classList.add("pie-chart-area");
+    pieChartContainerNbDocks.classList.add("hidden");
 
     const [
       pieChartCanvasNbBikes,
@@ -254,6 +404,54 @@ export const buildPage = async function (url: string) {
     let myPieChartNbBikes: Chart | unknown;
     let myPieChartNbEmptyDocks: Chart | unknown;
     let myPieChartNbDocks: Chart | unknown;
+
+    // Initialise the array that will hold the map popups
+    let toHoldPopUps: L.Popup[] = [];
+
+    // Initialise values for latlng bounds to use as params in getSouthLat, getNorthLat, getWestLon and getEastLon
+    let initSouthLat: number;
+    let initNorthLat: number;
+    let initWestLon: number;
+    let initEastLon: number;
+
+    // Initialise the map and center to current location
+    let map: L.Map = L.map(mapDiv, initMapOptions);
+    map.locate({setView: true});
+
+    setTimeout(function () {
+      map.invalidateSize();
+    }, 0);
+
+    // Event listener for when the user's location is found
+    map.addEventListener("locationfound", function () {
+      initSouthLat = map.getBounds().getSouth();
+      initNorthLat = map.getBounds().getNorth();
+      initWestLon = map.getBounds().getWest();
+      initEastLon = map.getBounds().getEast();
+
+      disabledOption.textContent = "Choose an area:" as string;
+      sortedBikePointsArray.forEach((obj) => {
+        dropDownList.insertAdjacentHTML(
+          "beforeend",
+          getSelectOptionDropDownList(obj)
+        );
+      });
+    });
+
+    // Event listener for when the users's location is not found
+    map.addEventListener("locationerror", function () {
+      map.panTo([51.5080964, -0.135468], myZoomPanOptions);
+      disabledOption.textContent = "Could not get location" as string;
+    });
+
+    // Event listener to change initial bound values after map is done moving
+    map.addEventListener("moveend", function () {
+      initSouthLat = map.getBounds().getSouth();
+      initNorthLat = map.getBounds().getNorth();
+      initWestLon = map.getBounds().getWest();
+      initEastLon = map.getBounds().getEast();
+      console.log(initSouthLat, initNorthLat, initWestLon, initEastLon);
+    });
 
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
@@ -347,6 +545,77 @@ export const buildPage = async function (url: string) {
         },
         options: pieChartOptions,
       });
+
+      barChartContainer.classList.remove("hidden");
+      pieChartContainerNbBikes.classList.remove("hidden");
+      pieChartContainerNbEmptyDocks.classList.remove("hidden");
+      pieChartContainerNbDocks.classList.remove("hidden");
+
+      // barChartContainer.scrollIntoView({behavior: "smooth"});
+
+      const selAreaBkPoints: BikePoint[] = selAreaObj.bikePoints;
+
+      if (toHoldPopUps.length !== 0) {
+        toHoldPopUps.forEach((bkPoint) => {
+          bkPoint.remove();
+        });
+        toHoldPopUps = [];
+      }
+
+      toHoldPopUps = selAreaBkPoints.map((bkPoint) => {
+        const bikesAvailable: number = Number(
+          bkPoint.additionalProperties.find((obj) => obj.key === "NbBikes")
+            ?.value
+        );
+
+        const totalBikes: number = Number(
+          bkPoint.additionalProperties.find((obj) => obj.key === "NbDocks")
+            ?.value
+        );
+
+        const percAvailable: number = (bikesAvailable / totalBikes) * 100;
+
+        const getPopUpColorLabel = function (perc: number): string {
+          if (perc === 0) return "❌";
+          if (perc > 0 && perc <= 20) return "🔴";
+          if (perc > 20 && perc <= 50) return "🟠";
+          if (perc > 50 && perc <= 80) return "🟡";
+          return "🟢";
+        };
+
+        const getBkpointStreetName = function (): string {
+          const bikePointname = bkPoint.commonName.split(",")[0];
+
+          if (bikePointname) return bikePointname;
+          return "";
+        };
+
+        const popupHTML = `
+        <div class="pop-up">
+        ${getPopUpColorLabel(percAvailable)}</br>
+        ${bikesAvailable} bike${bikesAvailable !== 1 ? "s" : ""} available</br>
+        ${getBkpointStreetName()}
+        </div>
+        `;
+
+        return L.popup(myPopUpOptions)
+          .setLatLng([bkPoint.lat, bkPoint.lon])
+          .setContent(popupHTML)
+          .addTo(map);
+      });
+
+      const newBounds: L.LatLngBounds = L.latLngBounds([
+        [
+          getNorthLat(selAreaBkPoints, initNorthLat),
+          getWestLon(selAreaBkPoints, initWestLon),
+        ],
+        [
+          getSouthLat(selAreaBkPoints, initSouthLat),
+          getEastLon(selAreaBkPoints, initEastLon),
+        ],
+      ]);
+
+      map.flyToBounds(newBounds, myZoomPanOptions);
     });
 
     return main;

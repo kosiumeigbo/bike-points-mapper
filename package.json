@@ -14,6 +14,10 @@
     "type": "git",
     "url": "https://github.com/kosiumeigbo/tfl-api.git"
   },
+  "staticFiles": {
+    "staticPath": "images",
+    "staticOutPath": "images"
+  },
   "dependencies": {
     "@types/geojson": "^7946.0.11",
     "@types/leaflet": "^1.9.6",

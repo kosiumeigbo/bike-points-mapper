@@ -32,6 +32,12 @@ $screen-s: 26.25rem; // 420px
   }
 }
 
+@mixin respond-any($size) {
+  @media (max-width: $size) {
+    @content;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -48,6 +54,31 @@ body {
 main {
   width: min(90%, $screen-xl);
   margin-inline: auto;
+}
+
+#areas {
+  margin-bottom: 1.5rem;
+}
+
+#map {
+  width: 60%;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  border: 1px solid black;
+
+  @include respond-l() {
+    width: 32rem;
+  }
+
+  @include respond-any(36rem) {
+    width: 100%;
+  }
+}
+
+.pop-up {
+  font-size: 0.5rem;
+  text-align: center;
+  color: black;
 }
 
 #bar-chart-container {
@@ -138,3 +169,7 @@ main {
 .page-error {
 }
  */
+
+.hidden {
+  display: none;
+}
