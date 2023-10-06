@@ -593,6 +593,25 @@ export const buildPage = async function (url: string) {
           .setContent(popupHTML)
           .addTo(map);
       });
+
+      const newBounds: L.LatLngBounds = L.latLngBounds([
+        [
+          getNorthLat(selAreaBkPoints, initNorthLat),
+          getWestLon(selAreaBkPoints, initWestLon),
+        ],
+        [
+          getSouthLat(selAreaBkPoints, initSouthLat),
+          getEastLon(selAreaBkPoints, initEastLon),
+        ],
+      ]);
+
+      map.flyToBounds(newBounds, myZoomPanOptions);
+      map.addEventListener("moveend", function () {
+        initSouthLat = map.getBounds().getSouth();
+        initNorthLat = map.getBounds().getNorth();
+        initWestLon = map.getBounds().getWest();
+        initEastLon = map.getBounds().getEast();
+      });
     });
 
     return main;
