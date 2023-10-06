@@ -9,7 +9,7 @@ const minZoom: number = 0;
 const maxZoom: number = 20;
 
 const googleStreets: L.TileLayer = L.tileLayer(
-  "http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+  "https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
   {
     minZoom,
     maxZoom,
@@ -19,7 +19,7 @@ const googleStreets: L.TileLayer = L.tileLayer(
 );
 
 const googleHybrid = L.tileLayer(
-  "http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
+  "https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
   {
     minZoom,
     maxZoom,
@@ -29,7 +29,7 @@ const googleHybrid = L.tileLayer(
 );
 
 const googleSat = L.tileLayer(
-  "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+  "https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
   {
     minZoom,
     maxZoom,
@@ -39,7 +39,7 @@ const googleSat = L.tileLayer(
 );
 
 const googleTerrain = L.tileLayer(
-  "http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}",
+  "https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}",
   {
     minZoom,
     maxZoom,
