@@ -594,7 +594,7 @@ export const buildPage = async function (url: string) {
         <div class="pop-up-content">
         ${getPopUpColorLabel(percAvailable)}</br>
         ${bikesAvailable} bike${bikesAvailable !== 1 ? "s" : ""} available</br>
-        ${getBkpointStreetName()}
+        @${getBkpointStreetName()}
         </div>
         `;
 
