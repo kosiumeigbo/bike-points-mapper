@@ -66,12 +66,15 @@ const initMapOptions: L.MapOptions = {
   closePopupOnClick: false,
 };
 
-const myPopUpOptions: L.PopupOptions = {
+const myPopUpOptions: L.PopupOptions & L.InteractiveLayerOptions = {
   autoPan: false,
   closeButton: false,
+  closeOnEscapeKey: false,
   autoClose: false,
   maxWidth: 100,
   keepInView: true,
+  interactive: true,
+  bubblingMouseEvents: true,
 };
 
 const myZoomPanOptions: L.FitBoundsOptions = {
@@ -556,8 +559,8 @@ export const buildPage = async function (url: string) {
       const selAreaBkPoints: BikePoint[] = selAreaObj.bikePoints;
 
       if (toHoldPopUps.length !== 0) {
-        toHoldPopUps.forEach((bkPoint) => {
-          bkPoint.remove();
+        toHoldPopUps.forEach((bkPointPopup) => {
+          bkPointPopup.remove();
         });
         toHoldPopUps = [];
       }
