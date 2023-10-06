@@ -66,12 +66,15 @@ const initMapOptions: L.MapOptions = {
   closePopupOnClick: false,
 };
 
-const myPopUpOptions: L.PopupOptions = {
+const myPopUpOptions: L.PopupOptions & L.InteractiveLayerOptions = {
   autoPan: false,
   closeButton: false,
+  closeOnEscapeKey: false,
   autoClose: false,
   maxWidth: 100,
   keepInView: true,
+  interactive: true,
+  bubblingMouseEvents: true,
 };
 
 const myZoomPanOptions: L.FitBoundsOptions = {
