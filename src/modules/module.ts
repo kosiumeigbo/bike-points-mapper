@@ -71,6 +71,7 @@ const myPopUpOptions: L.PopupOptions = {
   closeButton: false,
   autoClose: false,
   maxWidth: 100,
+  keepInView: true,
 };
 
 const myZoomPanOptions: L.FitBoundsOptions = {
@@ -443,6 +444,15 @@ export const buildPage = async function (url: string) {
       disabledOption.textContent = "Could not get location" as string;
     });
 
+    // Event listener to change initial bound values after map is done moving
+    map.addEventListener("moveend", function () {
+      initSouthLat = map.getBounds().getSouth();
+      initNorthLat = map.getBounds().getNorth();
+      initWestLon = map.getBounds().getWest();
+      initEastLon = map.getBounds().getEast();
+      console.log(initSouthLat, initNorthLat, initWestLon, initEastLon);
+    });
+
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
       const [
@@ -606,12 +616,6 @@ export const buildPage = async function (url: string) {
       ]);
 
       map.flyToBounds(newBounds, myZoomPanOptions);
-      map.addEventListener("moveend", function () {
-        initSouthLat = map.getBounds().getSouth();
-        initNorthLat = map.getBounds().getNorth();
-        initWestLon = map.getBounds().getWest();
-        initEastLon = map.getBounds().getEast();
-      });
     });
 
     return main;
