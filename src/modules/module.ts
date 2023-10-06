@@ -556,8 +556,8 @@ export const buildPage = async function (url: string) {
       const selAreaBkPoints: BikePoint[] = selAreaObj.bikePoints;
 
       if (toHoldPopUps.length !== 0) {
-        toHoldPopUps.forEach((bkPoint) => {
-          bkPoint.remove();
+        toHoldPopUps.forEach((bkPointPopup) => {
+          bkPointPopup.remove();
         });
         toHoldPopUps = [];
       }
