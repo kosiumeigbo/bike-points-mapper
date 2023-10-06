@@ -255,19 +255,13 @@ export const buildPage = async function (url: string) {
     // Drop down list
     const dropDownList: HTMLSelectElement = document.createElement("select");
     dropDownList.id = "areas";
-
     const disabledOption: HTMLOptionElement = document.createElement("option");
-    disabledOption.textContent = "Choose an option" as string; // Creating disabled option
+
+    // Creating disabled option and starting it off with "Getting location" while map loads location
+    disabledOption.textContent = "Getting location..." as string;
     disabledOption.setAttribute("selected", "");
     disabledOption.setAttribute("disabled", "");
     dropDownList.insertAdjacentElement("afterbegin", disabledOption);
-
-    sortedBikePointsArray.forEach((obj) => {
-      dropDownList.insertAdjacentHTML(
-        "beforeend",
-        getSelectOptionDropDownList(obj)
-      );
-    });
     main.insertAdjacentElement("beforeend", dropDownList);
 
     // Div creation for map
