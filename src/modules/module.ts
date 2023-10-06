@@ -78,6 +78,69 @@ const myZoomPanOptions: L.FitBoundsOptions = {
   duration: 0.25,
 };
 
+// Functions to get LatLngBounds for each selected area
+const getSouthLat = function (
+  arrBikePoints: BikePoint[],
+  oldSouthLat: number
+): number {
+  let southLat: number | undefined = arrBikePoints[0]?.lat;
+  if (southLat === undefined) return oldSouthLat;
+
+  for (const bkPoint of arrBikePoints) {
+    if (bkPoint.lat < southLat) {
+      southLat = bkPoint.lat;
+      continue;
+    }
+  }
+  return southLat;
+};
+
+const getNorthLat = function (
+  arrBikePoints: BikePoint[],
+  oldNorthLat: number
+): number {
+  let northLat: number | undefined = arrBikePoints[0]?.lat;
+  if (northLat === undefined) return oldNorthLat;
+
+  for (const bkPoint of arrBikePoints) {
+    if (bkPoint.lat > northLat) {
+      northLat = bkPoint.lat;
+      continue;
+    }
+  }
+  return northLat;
+};
+
+const getWestLon = function (
+  arrBikePoints: BikePoint[],
+  oldWestLon: number
+): number {
+  let westLon: number | undefined = arrBikePoints[0]?.lon;
+  if (westLon === undefined) return oldWestLon;
+
+  for (const bkPoint of arrBikePoints) {
+    if (bkPoint.lon < westLon) {
+      westLon = bkPoint.lon;
+      continue;
+    }
+  }
+  return westLon;
+};
+
+const getEastLon = function (
+  arrBikePoints: BikePoint[],
+  oldEastLon: number
+): number {
+  let eastLon: number | undefined = arrBikePoints[0]?.lon;
+  if (eastLon === undefined) return oldEastLon;
+
+  for (const bkPoint of arrBikePoints) {
+    if (bkPoint.lon > eastLon) {
+      eastLon = bkPoint.lon;
+      continue;
+    }
+  }
+  return eastLon;
 };
 /* Leaflet Ends */
 
