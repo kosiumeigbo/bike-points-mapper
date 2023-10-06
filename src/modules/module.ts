@@ -56,7 +56,6 @@ const baseMaps = {
 };
 
 const initMapOptions: L.MapOptions = {
-  // center: [51.5080964, -0.135468],
   zoom: 13,
   minZoom,
   maxZoom,
@@ -66,20 +65,13 @@ const initMapOptions: L.MapOptions = {
   layers: [googleStreets],
   closePopupOnClick: false,
 };
-/*
-const myBikeIcon: L.Icon = L.icon({
-  iconUrl: "../../images/icon.png",
-  iconSize: [100, 100],
-  // iconAnchor: [15, -13],
-  // popupAnchor: [0, 13],
-});
-*/
 
 const myPopUpOptions: L.PopupOptions = {
   autoPan: false,
   closeButton: false,
   autoClose: false,
-  className: "pop-up",
+  maxWidth: 100,
+};
 };
 /* Leaflet Ends */
 
