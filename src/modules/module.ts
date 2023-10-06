@@ -72,6 +72,12 @@ const myPopUpOptions: L.PopupOptions = {
   autoClose: false,
   maxWidth: 100,
 };
+
+const myZoomPanOptions: L.FitBoundsOptions = {
+  easeLinearity: 0.6,
+  duration: 0.25,
+};
+
 };
 /* Leaflet Ends */
 
