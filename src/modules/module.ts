@@ -404,8 +404,17 @@ export const buildPage = async function (url: string) {
     let myPieChartNbEmptyDocks: Chart | unknown;
     let myPieChartNbDocks: Chart | unknown;
 
+    // Initialise the array that will hold the map popups
+    let toHoldPopUps: L.Popup[] = [];
+
+    // Initialise values for latlng bounds to use as params in getSouthLat, getNorthLat, getWestLon and getEastLon
+    let initSouthLat: number;
+    let initNorthLat: number;
+    let initWestLon: number;
+    let initEastLon: number;
+
+    // Initialise the map and center to current location
     let map: L.Map = L.map(mapDiv, initMapOptions);
-    // const layerControl = L.control.layers(baseMaps).addTo(map);
     map.locate({setView: true});
 
     setTimeout(function () {
