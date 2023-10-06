@@ -590,7 +590,7 @@ export const buildPage = async function (url: string) {
 
         return L.popup(myPopUpOptions)
           .setLatLng([bkPoint.lat, bkPoint.lon])
-          .setContent("Hello")
+          .setContent(popupHTML)
           .addTo(map);
       });
     });
