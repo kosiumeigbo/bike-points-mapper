@@ -421,8 +421,27 @@ export const buildPage = async function (url: string) {
       map.invalidateSize();
     }, 0);
 
-    // Initialise the array that will hold the map popups
-    let toHoldPopUps: L.Popup[] = [];
+    // Event listener for when the user's location is found
+    map.addEventListener("locationfound", function () {
+      initSouthLat = map.getBounds().getSouth();
+      initNorthLat = map.getBounds().getNorth();
+      initWestLon = map.getBounds().getWest();
+      initEastLon = map.getBounds().getEast();
+
+      disabledOption.textContent = "Choose an area:" as string;
+      sortedBikePointsArray.forEach((obj) => {
+        dropDownList.insertAdjacentHTML(
+          "beforeend",
+          getSelectOptionDropDownList(obj)
+        );
+      });
+    });
+
+    // Event listener for when the users's location is not found
+    map.addEventListener("locationerror", function () {
+      map.panTo([51.5080964, -0.135468], myZoomPanOptions);
+      disabledOption.textContent = "Could not get location" as string;
+    });
 
     // Event Listener for when an option is selected
     dropDownList.addEventListener("change", function () {
