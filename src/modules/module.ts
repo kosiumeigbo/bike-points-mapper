@@ -641,45 +641,7 @@ export const buildPage = async function (url: string) {
       }
 
       toHoldPopUps = selAreaBkPoints.map((bkPoint) => {
-        const bikesAvailable: number = Number(
-          bkPoint.additionalProperties.find((obj) => obj.key === "NbBikes")
-            ?.value
-        );
-
-        const totalBikes: number = Number(
-          bkPoint.additionalProperties.find((obj) => obj.key === "NbDocks")
-            ?.value
-        );
-
-        const percAvailable: number = (bikesAvailable / totalBikes) * 100;
-
-        const getPopUpColorLabel = function (perc: number): string {
-          if (perc === 0) return "❌";
-          if (perc > 0 && perc <= 20) return "🔴";
-          if (perc > 20 && perc <= 50) return "🟠";
-          if (perc > 50 && perc <= 80) return "🟡";
-          return "🟢";
-        };
-
-        const getBkpointStreetName = function (): string {
-          const bikePointname = bkPoint.commonName.split(",")[0];
-
-          if (bikePointname) return bikePointname;
-          return "";
-        };
-
-        const popupHTML = `
-        <div class="pop-up-content">
-        ${getPopUpColorLabel(percAvailable)}</br>
-        ${bikesAvailable} bike${bikesAvailable !== 1 ? "s" : ""} available</br>
-        @${getBkpointStreetName()}
-        </div>
-        `;
-
-        return L.popup(myPopUpOptions)
-          .setLatLng([bkPoint.lat, bkPoint.lon])
-          .setContent(popupHTML)
-          .addTo(map);
+        return createPopup(bkPoint, map);
       });
 
       const newBounds: L.LatLngBounds = L.latLngBounds([
