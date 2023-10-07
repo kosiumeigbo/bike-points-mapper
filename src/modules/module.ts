@@ -485,6 +485,7 @@ export const buildPage = async function (url: string) {
       initNorthLat = map.getBounds().getNorth();
       initWestLon = map.getBounds().getWest();
       initEastLon = map.getBounds().getEast();
+      console.log(1);
 
       const bikePointsInLocation: BikePoint[] = allBikePointsArray.filter(
         (bkPoint) => {
