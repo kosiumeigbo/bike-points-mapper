@@ -214,7 +214,16 @@ const pieChartOptions = {
 };
 /* Chart JS Ends */
 
-export const getDataForAllBikePoints = async function (url: string) {
+export const getDataForAllBikePoints = async function (url: string): Promise<
+  | [
+      {
+        name: string;
+        bikePoints: BikePoint[];
+      }[],
+      BikePoint[]
+    ]
+  | Error
+> {
   try {
     const response: Response = await fetch(url);
     if (!response.ok) {
