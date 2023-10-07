@@ -249,7 +249,7 @@ export const getDataForAllBikePoints = async function (url: string): Promise<
       }
     );
 
-    return result;
+    return [result, allBikePoints];
   } catch (e) {
     return e as Error;
   }
