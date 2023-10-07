@@ -473,7 +473,7 @@ export const buildPage = async function (url: string) {
 
     // Initialise the map and center to current location
     let map: L.Map = L.map(mapDiv, initMapOptions);
-    map.locate({setView: true, maxZoom: 13});
+    map.locate({setView: true, maxZoom: 17});
 
     setTimeout(function () {
       map.invalidateSize();
