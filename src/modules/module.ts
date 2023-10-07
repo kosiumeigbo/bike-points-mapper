@@ -82,6 +82,12 @@ const myZoomPanOptions: L.FitBoundsOptions = {
   duration: 0.25,
 };
 
+// Initialise values for latlng bounds to use as params in getSouthLat, getNorthLat, getWestLon and getEastLon
+let initSouthLat: number;
+let initNorthLat: number;
+let initWestLon: number;
+let initEastLon: number;
+
 // Functions to get LatLngBounds for each selected area
 const getSouthLat = function (
   arrBikePoints: BikePoint[],
@@ -410,12 +416,6 @@ export const buildPage = async function (url: string) {
 
     // Initialise the array that will hold the map popups
     let toHoldPopUps: L.Popup[] = [];
-
-    // Initialise values for latlng bounds to use as params in getSouthLat, getNorthLat, getWestLon and getEastLon
-    let initSouthLat: number;
-    let initNorthLat: number;
-    let initWestLon: number;
-    let initEastLon: number;
 
     // Initialise the map and center to current location
     let map: L.Map = L.map(mapDiv, initMapOptions);
