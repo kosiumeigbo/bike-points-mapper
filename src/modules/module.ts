@@ -82,6 +82,12 @@ const myZoomPanOptions: L.FitBoundsOptions = {
   duration: 0.25,
 };
 
+// Initialise values for latlng bounds to use as params in getSouthLat, getNorthLat, getWestLon and getEastLon
+let initSouthLat: number;
+let initNorthLat: number;
+let initWestLon: number;
+let initEastLon: number;
+
 // Functions to get LatLngBounds for each selected area
 const getSouthLat = function (
   arrBikePoints: BikePoint[],
@@ -146,6 +152,46 @@ const getEastLon = function (
   }
   return eastLon;
 };
+
+const createPopup = function (bkPoint: BikePoint, map: L.Map) {
+  const bikesAvailable: number = Number(
+    bkPoint.additionalProperties.find((obj) => obj.key === "NbBikes")?.value
+  );
+
+  const totalBikes: number = Number(
+    bkPoint.additionalProperties.find((obj) => obj.key === "NbDocks")?.value
+  );
+
+  const percAvailable: number = (bikesAvailable / totalBikes) * 100;
+
+  const getPopUpColorLabel = function (perc: number): string {
+    if (perc === 0) return "❌";
+    if (perc > 0 && perc <= 20) return "🔴";
+    if (perc > 20 && perc <= 50) return "🟠";
+    if (perc > 50 && perc <= 80) return "🟡";
+    return "🟢";
+  };
+
+  const getBkpointStreetName = function (): string {
+    const bikePointname = bkPoint.commonName.split(",")[0];
+
+    if (bikePointname) return bikePointname;
+    return "";
+  };
+
+  const popupHTML = `
+  <div class="pop-up-content">
+  ${getPopUpColorLabel(percAvailable)}</br>
+  ${bikesAvailable} bike${bikesAvailable !== 1 ? "s" : ""} available</br>
+  @${getBkpointStreetName()}
+  </div>
+  `;
+
+  return L.popup(myPopUpOptions)
+    .setLatLng([bkPoint.lat, bkPoint.lon])
+    .setContent(popupHTML)
+    .addTo(map);
+};
 /* Leaflet Ends */
 
 ///////////////////////////////////////////////////////////////////
@@ -168,7 +214,16 @@ const pieChartOptions = {
 };
 /* Chart JS Ends */
 
-export const getDataForAllBikePoints = async function (url: string) {
+export const getDataForAllBikePoints = async function (url: string): Promise<
+  | [
+      {
+        name: string;
+        bikePoints: BikePoint[];
+      }[],
+      BikePoint[]
+    ]
+  | Error
+> {
   try {
     const response: Response = await fetch(url);
     if (!response.ok) {
@@ -194,7 +249,7 @@ export const getDataForAllBikePoints = async function (url: string) {
       }
     );
 
-    return result;
+    return [result, allBikePoints];
   } catch (e) {
     return e as Error;
   }
@@ -294,16 +349,21 @@ export const getDataForCharts = function (
 
 export const buildPage = async function (url: string) {
   try {
-    const sortedBikePointsArray = (await getDataForAllBikePoints(url)) as
-      | {
-          name: string;
-          bikePoints: BikePoint[];
-        }[]
+    const data = (await getDataForAllBikePoints(url)) as
+      | [
+          {
+            name: string;
+            bikePoints: BikePoint[];
+          }[],
+          BikePoint[]
+        ]
       | Error;
-    if (sortedBikePointsArray instanceof Error) {
-      throw sortedBikePointsArray;
+    if (data instanceof Error) {
+      throw data;
     }
-    // console.log(sortedBikePointsArray);
+
+    // Destructuring the data from the async function
+    const [sortedBikePointsArray, allBikePointsArray] = data;
 
     // Main page content container
     const main: HTMLElement = document.createElement("main");
@@ -411,15 +471,9 @@ export const buildPage = async function (url: string) {
     // Initialise the array that will hold the map popups
     let toHoldPopUps: L.Popup[] = [];
 
-    // Initialise values for latlng bounds to use as params in getSouthLat, getNorthLat, getWestLon and getEastLon
-    let initSouthLat: number;
-    let initNorthLat: number;
-    let initWestLon: number;
-    let initEastLon: number;
-
     // Initialise the map and center to current location
     let map: L.Map = L.map(mapDiv, initMapOptions);
-    map.locate({setView: true});
+    map.locate({setView: true, maxZoom: 17});
 
     setTimeout(function () {
       map.invalidateSize();
@@ -431,6 +485,27 @@ export const buildPage = async function (url: string) {
       initNorthLat = map.getBounds().getNorth();
       initWestLon = map.getBounds().getWest();
       initEastLon = map.getBounds().getEast();
+
+      const bikePointsInLocation: BikePoint[] = allBikePointsArray.filter(
+        (bkPoint) => {
+          bkPoint.lat < initNorthLat &&
+            bkPoint.lat > initSouthLat &&
+            bkPoint.lon < initEastLon &&
+            bkPoint.lon > initWestLon;
+        }
+      );
+
+      if (bikePointsInLocation.length !== 0) {
+        if (toHoldPopUps.length !== 0) {
+          toHoldPopUps.forEach((popup) => {
+            popup.remove();
+          });
+          toHoldPopUps = [];
+        }
+        toHoldPopUps = bikePointsInLocation.map((bkPoint) => {
+          return createPopup(bkPoint, map);
+        });
+      }
 
       disabledOption.textContent = "Choose an area:" as string;
       sortedBikePointsArray.forEach((obj) => {
@@ -566,45 +641,7 @@ export const buildPage = async function (url: string) {
       }
 
       toHoldPopUps = selAreaBkPoints.map((bkPoint) => {
-        const bikesAvailable: number = Number(
-          bkPoint.additionalProperties.find((obj) => obj.key === "NbBikes")
-            ?.value
-        );
-
-        const totalBikes: number = Number(
-          bkPoint.additionalProperties.find((obj) => obj.key === "NbDocks")
-            ?.value
-        );
-
-        const percAvailable: number = (bikesAvailable / totalBikes) * 100;
-
-        const getPopUpColorLabel = function (perc: number): string {
-          if (perc === 0) return "❌";
-          if (perc > 0 && perc <= 20) return "🔴";
-          if (perc > 20 && perc <= 50) return "🟠";
-          if (perc > 50 && perc <= 80) return "🟡";
-          return "🟢";
-        };
-
-        const getBkpointStreetName = function (): string {
-          const bikePointname = bkPoint.commonName.split(",")[0];
-
-          if (bikePointname) return bikePointname;
-          return "";
-        };
-
-        const popupHTML = `
-        <div class="pop-up-content">
-        ${getPopUpColorLabel(percAvailable)}</br>
-        ${bikesAvailable} bike${bikesAvailable !== 1 ? "s" : ""} available</br>
-        @${getBkpointStreetName()}
-        </div>
-        `;
-
-        return L.popup(myPopUpOptions)
-          .setLatLng([bkPoint.lat, bkPoint.lon])
-          .setContent(popupHTML)
-          .addTo(map);
+        return createPopup(bkPoint, map);
       });
 
       const newBounds: L.LatLngBounds = L.latLngBounds([
