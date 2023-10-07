@@ -349,16 +349,21 @@ export const getDataForCharts = function (
 
 export const buildPage = async function (url: string) {
   try {
-    const sortedBikePointsArray = (await getDataForAllBikePoints(url)) as
-      | {
-          name: string;
-          bikePoints: BikePoint[];
-        }[]
+    const data = (await getDataForAllBikePoints(url)) as
+      | [
+          {
+            name: string;
+            bikePoints: BikePoint[];
+          }[],
+          BikePoint[]
+        ]
       | Error;
-    if (sortedBikePointsArray instanceof Error) {
-      throw sortedBikePointsArray;
+    if (data instanceof Error) {
+      throw data;
     }
-    // console.log(sortedBikePointsArray);
+
+    // Destructuring the data from the async function
+    const [sortedBikePointsArray, allBikePointsArray] = data;
 
     // Main page content container
     const main: HTMLElement = document.createElement("main");
