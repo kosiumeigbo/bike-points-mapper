@@ -486,6 +486,27 @@ export const buildPage = async function (url: string) {
       initWestLon = map.getBounds().getWest();
       initEastLon = map.getBounds().getEast();
 
+      const bikePointsInLocation: BikePoint[] = allBikePointsArray.filter(
+        (bkPoint) => {
+          bkPoint.lat < initNorthLat &&
+            bkPoint.lat > initSouthLat &&
+            bkPoint.lon < initEastLon &&
+            bkPoint.lon > initWestLon;
+        }
+      );
+
+      if (bikePointsInLocation.length !== 0) {
+        if (toHoldPopUps.length !== 0) {
+          toHoldPopUps.forEach((popup) => {
+            popup.remove();
+          });
+          toHoldPopUps = [];
+        }
+        toHoldPopUps = bikePointsInLocation.map((bkPoint) => {
+          return createPopup(bkPoint, map);
+        });
+      }
+
       disabledOption.textContent = "Choose an area:" as string;
       sortedBikePointsArray.forEach((obj) => {
         dropDownList.insertAdjacentHTML(
