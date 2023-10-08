@@ -528,7 +528,6 @@ export const buildPage = async function (url: string) {
       initNorthLat = map.getBounds().getNorth();
       initWestLon = map.getBounds().getWest();
       initEastLon = map.getBounds().getEast();
-      console.log(initSouthLat, initNorthLat, initWestLon, initEastLon);
     });
 
     // Event Listener for when an option is selected
@@ -540,13 +539,6 @@ export const buildPage = async function (url: string) {
         selAreaNbEmptyDocks,
         selAreaNbDocks,
       ] = getDataForCharts(dropDownList.value, sortedBikePointsArray);
-
-      console.clear();
-      console.log(selAreaObj);
-      console.log(selLabelNamesArr);
-      console.log(selAreaNbBikes);
-      console.log(selAreaNbEmptyDocks);
-      console.log(selAreaNbDocks);
 
       if (
         myBarChart instanceof Chart &&
