@@ -1,18 +1,17 @@
 {
-  "name": "tfl-api",
+  "name": "bike-points-mapper",
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel index.html --open --dist-dir server",
-    "build": "if [ -d dist ]; then rm -r dist; fi && parcel build index.html --public-url https://kosiumeigbo.github.io/tfl-api/ --dist-dir dist",
+    "build": "if [ -d dist ]; then rm -r dist; fi && parcel build index.html --public-url https://kosiumeigbo.github.io/bike-points-mapper/ --dist-dir dist",
     "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kosiumeigbo/tfl-api.git"
+    "url": "https://github.com/kosiumeigbo/bike-points-mapper.git"
   },
   "staticFiles": {
     "staticPath": "images",
